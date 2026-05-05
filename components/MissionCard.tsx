@@ -17,7 +17,6 @@ interface MissionCardProps {
   onUncomplete: (id: string) => void;
 }
 
-const EASE_EMOJIS = ["", "😤", "😕", "😐", "😊", "🎉"];
 const EASE_LABELS = ["", "Muy difícil", "Difícil", "Normal", "Fácil", "Muy fácil"];
 
 export function MissionCard({
@@ -88,7 +87,7 @@ export function MissionCard({
           </div>
           {isComplete && mf.ease > 0 && (
             <p className="text-xs text-stone-400 mt-1">
-              {EASE_EMOJIS[mf.ease]} {EASE_LABELS[mf.ease]}
+              {mf.ease}/5 · {EASE_LABELS[mf.ease]}
             </p>
           )}
         </div>
@@ -139,23 +138,32 @@ export function MissionCard({
                 >
                   ¿Qué tan fácil fue esta misión?
                 </p>
-                <div className="flex gap-2">
+                <div className="flex gap-1.5 mb-1">
                   {[1, 2, 3, 4, 5].map((n) => (
                     <button
                       key={n}
                       onClick={() => setEase(n)}
-                      className="flex-1 py-3 rounded-xl text-xl transition-all duration-150 border-2"
+                      className="flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-150 border-2"
                       style={{
+                        fontFamily: "var(--font-rubik), sans-serif",
                         backgroundColor: ease === n ? accent : "#f5f5f4",
                         borderColor: ease === n ? accent : "transparent",
+                        color: ease === n ? "white" : "#78716c",
                       }}
                     >
-                      {EASE_EMOJIS[n]}
+                      {n}
                     </button>
                   ))}
                 </div>
+                <div className="flex justify-between text-xs text-stone-400 px-0.5">
+                  <span>Muy difícil</span>
+                  <span>Muy fácil</span>
+                </div>
                 {ease > 0 && (
-                  <p className="text-xs text-stone-500 mt-2 text-center">
+                  <p
+                    className="text-xs text-stone-500 mt-2 text-center font-medium"
+                    style={{ fontFamily: "var(--font-rubik), sans-serif" }}
+                  >
                     {EASE_LABELS[ease]}
                   </p>
                 )}
