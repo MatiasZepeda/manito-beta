@@ -3,42 +3,51 @@
 import { useState, useEffect } from "react";
 import { clienteMissions } from "@/lib/content";
 import { MissionCard } from "@/components/MissionCard";
+import type { MissionFeedback } from "@/components/MissionCard";
 
-const STORAGE_KEY = "manito-beta-cliente";
+const STORAGE_KEY = "manito-beta-cliente-v2";
 const CORAL = "#f26a4b";
 const CORAL_LIGHT = "#fde8e1";
 
 export default function ClientePage() {
-  const [completed, setCompleted] = useState<string[]>([]);
+  const [feedback, setFeedback] = useState<Record<string, MissionFeedback>>({});
   const [ready, setReady] = useState(false);
+  const [writeText, setWriteText] = useState("");
 
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) setCompleted(JSON.parse(saved));
+    if (saved) setFeedback(JSON.parse(saved));
     setReady(true);
   }, []);
 
-  const toggle = (id: string) => {
-    const next = completed.includes(id)
-      ? completed.filter((x) => x !== id)
-      : [...completed, id];
-    setCompleted(next);
+  const complete = (id: string, data: MissionFeedback) => {
+    const next = { ...feedback, [id]: data };
+    setFeedback(next);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  };
+
+  const uncomplete = (id: string) => {
+    const next = { ...feedback };
+    delete next[id];
+    setFeedback(next);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
   };
 
   const required = clienteMissions.filter((m) => !m.optional);
   const optional = clienteMissions.filter((m) => m.optional);
-  const completedMissions = required.filter((m) =>
-    m.objectives.every((o) => completed.includes(o.id))
-  ).length;
+  const completedMissions = required.filter((m) => feedback[m.id]).length;
+
+  const handleSendText = () => {
+    const msg = encodeURIComponent(
+      writeText.trim() || "Hola, tengo feedback sobre la beta de Manito."
+    );
+    window.open(`https://wa.me/16088933997?text=${msg}`, "_blank");
+  };
 
   if (!ready) return null;
 
   return (
-    <div
-      className="min-h-screen pb-16"
-      style={{ backgroundColor: "#fdf9f6" }}
-    >
+    <div className="min-h-screen pb-16" style={{ backgroundColor: "#fdf9f6" }}>
       <div className="max-w-2xl mx-auto px-4 py-10">
         {/* Header */}
         <div className="mb-8">
@@ -50,7 +59,7 @@ export default function ClientePage() {
               fontFamily: "var(--font-rubik), sans-serif",
             }}
           >
-            Guía Beta — Cliente
+            Guía Beta: Cliente
           </span>
           <h1
             className="text-3xl font-bold text-stone-900 mb-3"
@@ -63,6 +72,28 @@ export default function ClientePage() {
             cómo hacerlo. Si algo no se entiende solo, eso es exactamente lo
             que necesitamos saber.
           </p>
+
+          {/* Error report banner */}
+          <div
+            className="mt-4 rounded-xl p-4 border flex items-start gap-3"
+            style={{ backgroundColor: "#fff9f0", borderColor: "#f2994a40" }}
+          >
+            <span className="text-lg shrink-0">📸</span>
+            <p className="text-sm text-stone-600 leading-relaxed">
+              <strong className="text-stone-800">¿Ves algún error?</strong>{" "}
+              Mándanos un pantallazo de lo que ves por WhatsApp y cuéntanos
+              dónde ocurrió.{" "}
+              <a
+                href="https://wa.me/16088933997"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2"
+                style={{ color: CORAL }}
+              >
+                Escribir por WhatsApp
+              </a>
+            </p>
+          </div>
 
           {/* Progress */}
           <div className="mt-5 bg-white rounded-xl p-4 border border-stone-100">
@@ -101,13 +132,13 @@ export default function ClientePage() {
             >
               ¿Qué es Manito y por qué existe?
             </span>
-            <span className="text-stone-400 text-xs transition-transform duration-200 group-open:rotate-180">
+            <span className="text-stone-400 text-lg transition-transform duration-200 group-open:rotate-180">
               ▾
             </span>
           </summary>
           <div className="px-5 pb-5 border-t border-stone-50 pt-4 text-stone-600 text-sm leading-relaxed space-y-3">
             <p>
-              Buscar maestro en Chile es un deporte extremo. Le preguntas al
+              Encontrar un buen maestro en Chile es difícil. Le preguntas al
               vecino, buscas en el grupo del edificio, alguien te da el número
               del primo del portero, y todavía no sabes si el gallo va a
               aparecer o te va a cobrar lo que se le ocurra.
@@ -115,7 +146,7 @@ export default function ClientePage() {
             <p>
               Manito existe para que eso deje de ser así. Describes el trabajo
               que necesitas, los maestros te mandan sus cotizaciones, y tú
-              eliges con quién trabajar — todo dentro de la app, con precio
+              eliges con quién trabajar. Todo dentro de la app, con precio
               acordado antes de que lleguen a tu casa.
             </p>
             <p>
@@ -146,7 +177,7 @@ export default function ClientePage() {
             No necesitas saber nada de tecnología. Lo que nos sirve es que uses
             la app como cualquier persona que la descarga por primera vez sin
             que nadie le explique nada. Si algo no lo entendiste, eso es oro
-            para nosotros. No hay respuestas buenas ni malas — solo datos.
+            para nosotros. No hay respuestas buenas ni malas, solo datos.
           </p>
         </div>
 
@@ -164,8 +195,9 @@ export default function ClientePage() {
               mission={mission}
               accent={CORAL}
               accentLight={CORAL_LIGHT}
-              completed={completed}
-              onToggle={toggle}
+              feedback={feedback}
+              onComplete={complete}
+              onUncomplete={uncomplete}
             />
           ))}
         </div>
@@ -187,8 +219,9 @@ export default function ClientePage() {
               mission={mission}
               accent={CORAL}
               accentLight={CORAL_LIGHT}
-              completed={completed}
-              onToggle={toggle}
+              feedback={feedback}
+              onComplete={complete}
+              onUncomplete={uncomplete}
             />
           ))}
         </div>
@@ -201,56 +234,72 @@ export default function ClientePage() {
           >
             Cuando termines
           </h2>
-          <p className="text-stone-600 text-sm mb-5 leading-relaxed">
-            Mándanos tres audios de WhatsApp — uno por cada categoría de abajo.
-            No tienes que escribir nada. Un audio relajado de 1 a 3 minutos por
-            categoría está perfecto.
+          <p className="text-stone-600 text-sm mb-4 leading-relaxed">
+            Mándanos un audio de WhatsApp con tus impresiones sobre la app. No
+            tienes que preparar nada, habla natural. Puedes comentar sobre
+            cualquier cosa, por ejemplo:
           </p>
+
+          <div className="space-y-2 mb-5">
+            {[
+              {
+                emoji: "💭",
+                text: "Tu impresión general: ¿tiene sentido el producto? ¿Lo usarías en tu vida real para buscar un maestro?",
+              },
+              {
+                emoji: "🐛",
+                text: "Cosas que no funcionaron o no entendiste: qué pantalla, qué pasó, qué hiciste antes.",
+              },
+              {
+                emoji: "🧭",
+                text: "Qué tan fácil o difícil fue navegar: ¿hubo algún momento donde no supiste qué hacer o adónde ir?",
+              },
+            ].map((item) => (
+              <div
+                key={item.text}
+                className="flex gap-3 p-3 bg-stone-50 rounded-xl"
+              >
+                <span className="text-base shrink-0">{item.emoji}</span>
+                <p className="text-stone-600 text-xs leading-relaxed">
+                  {item.text}
+                </p>
+              </div>
+            ))}
+          </div>
 
           <a
             href="https://wa.me/16088933997"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 w-full py-3 text-white rounded-xl font-medium text-sm transition-opacity hover:opacity-90 mb-5"
+            className="flex items-center justify-center gap-2 w-full py-3 text-white rounded-xl font-medium text-sm transition-opacity hover:opacity-90"
             style={{ backgroundColor: "#25D366" }}
           >
-            <span>💬</span> Escríbenos por WhatsApp
+            <span>💬</span> Mandar audio por WhatsApp
           </a>
 
-          <div className="space-y-2.5">
-            {[
-              {
-                emoji: "💭",
-                title: "Audio 1 — Tu impresión general",
-                desc: "¿Tiene sentido el producto? ¿Lo usarías en tu vida real para buscar un maestro? ¿Qué le agregarías o cambiarías?",
-              },
-              {
-                emoji: "🐛",
-                title: "Audio 2 — Bugs o cosas que no funcionaron",
-                desc: "Si algo se trabó o hizo algo inesperado: en qué pantalla estabas, qué hiciste justo antes, qué fue lo que ocurrió.",
-              },
-              {
-                emoji: "🧭",
-                title: "Audio 3 — Navegación",
-                desc: "¿Qué tan fácil fue encontrar lo que buscabas? ¿Hubo algún momento donde no supiste qué hacer o adónde ir?",
-              },
-            ].map((item) => (
-              <div
-                key={item.title}
-                className="flex gap-3 p-3.5 bg-stone-50 rounded-xl"
-              >
-                <span className="text-lg mt-0.5 shrink-0">{item.emoji}</span>
-                <div>
-                  <p className="font-medium text-stone-800 text-sm">
-                    {item.title}
-                  </p>
-                  <p className="text-stone-500 text-xs mt-1 leading-relaxed">
-                    {item.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
+          <div className="flex items-center gap-3 my-5">
+            <div className="flex-1 h-px bg-stone-100" />
+            <span className="text-xs text-stone-400 shrink-0">
+              o escríbenos aquí
+            </span>
+            <div className="flex-1 h-px bg-stone-100" />
           </div>
+
+          <textarea
+            value={writeText}
+            onChange={(e) => setWriteText(e.target.value)}
+            placeholder="Escribe tu feedback aquí y lo enviamos por WhatsApp..."
+            className="w-full rounded-xl border border-stone-200 p-3.5 text-sm text-stone-700 placeholder-stone-400 resize-none outline-none focus:border-stone-300 transition-colors mb-3"
+            rows={4}
+          />
+
+          <button
+            onClick={handleSendText}
+            className="w-full py-3 rounded-xl font-medium text-sm transition-opacity hover:opacity-90 border-2"
+            style={{ borderColor: "#25D366", color: "#25D366" }}
+          >
+            Enviar por WhatsApp
+          </button>
         </div>
       </div>
     </div>

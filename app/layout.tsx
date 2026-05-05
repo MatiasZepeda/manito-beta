@@ -33,14 +33,14 @@ export default function RootLayout({
         style={{ fontFamily: "var(--font-dm), sans-serif" }}
       >
         <nav className="sticky top-0 z-50 bg-white border-b border-stone-100 shadow-sm">
-          <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
+          <div className="max-w-3xl mx-auto px-4 h-16 flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <Image
                 src="/logo.png"
                 alt="Manito"
-                width={80}
-                height={40}
-                className="h-8 w-auto object-contain"
+                width={100}
+                height={48}
+                className="h-10 w-auto object-contain"
                 priority
               />
               <span

@@ -3,40 +3,49 @@
 import { useState, useEffect } from "react";
 import { maestroMissions } from "@/lib/content";
 import { MissionCard } from "@/components/MissionCard";
+import type { MissionFeedback } from "@/components/MissionCard";
 
-const STORAGE_KEY = "manito-beta-maestro";
+const STORAGE_KEY = "manito-beta-maestro-v2";
 const TEAL = "#1a7f8e";
 const TEAL_LIGHT = "#d6f0f3";
 
 export default function MaestroPage() {
-  const [completed, setCompleted] = useState<string[]>([]);
+  const [feedback, setFeedback] = useState<Record<string, MissionFeedback>>({});
   const [ready, setReady] = useState(false);
+  const [writeText, setWriteText] = useState("");
 
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) setCompleted(JSON.parse(saved));
+    if (saved) setFeedback(JSON.parse(saved));
     setReady(true);
   }, []);
 
-  const toggle = (id: string) => {
-    const next = completed.includes(id)
-      ? completed.filter((x) => x !== id)
-      : [...completed, id];
-    setCompleted(next);
+  const complete = (id: string, data: MissionFeedback) => {
+    const next = { ...feedback, [id]: data };
+    setFeedback(next);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
   };
 
-  const completedMissions = maestroMissions.filter((m) =>
-    m.objectives.every((o) => completed.includes(o.id))
-  ).length;
+  const uncomplete = (id: string) => {
+    const next = { ...feedback };
+    delete next[id];
+    setFeedback(next);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  };
+
+  const completedMissions = maestroMissions.filter((m) => feedback[m.id]).length;
+
+  const handleSendText = () => {
+    const msg = encodeURIComponent(
+      writeText.trim() || "Hola, tengo feedback sobre la beta de Manito."
+    );
+    window.open(`https://wa.me/16088933997?text=${msg}`, "_blank");
+  };
 
   if (!ready) return null;
 
   return (
-    <div
-      className="min-h-screen pb-16"
-      style={{ backgroundColor: "#fdf9f6" }}
-    >
+    <div className="min-h-screen pb-16" style={{ backgroundColor: "#fdf9f6" }}>
       <div className="max-w-2xl mx-auto px-4 py-10">
         {/* Header */}
         <div className="mb-8">
@@ -48,7 +57,7 @@ export default function MaestroPage() {
               fontFamily: "var(--font-rubik), sans-serif",
             }}
           >
-            Guía Beta — Maestro
+            Guía Beta: Maestro
           </span>
           <h1
             className="text-3xl font-bold text-stone-900 mb-3"
@@ -61,6 +70,28 @@ export default function MaestroPage() {
             o no tenía sentido para tu forma de trabajar, eso es exactamente lo
             que necesitamos saber. Tú eres el experto en la pega.
           </p>
+
+          {/* Error report banner */}
+          <div
+            className="mt-4 rounded-xl p-4 border flex items-start gap-3"
+            style={{ backgroundColor: "#f0f9fa", borderColor: `${TEAL}30` }}
+          >
+            <span className="text-lg shrink-0">📸</span>
+            <p className="text-sm text-stone-600 leading-relaxed">
+              <strong className="text-stone-800">¿Ves algún error?</strong>{" "}
+              Mándanos un pantallazo de lo que ves por WhatsApp y cuéntanos
+              dónde ocurrió.{" "}
+              <a
+                href="https://wa.me/16088933997"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2"
+                style={{ color: TEAL }}
+              >
+                Escribir por WhatsApp
+              </a>
+            </p>
+          </div>
 
           {/* Progress */}
           <div className="mt-5 bg-white rounded-xl p-4 border border-stone-100">
@@ -90,7 +121,7 @@ export default function MaestroPage() {
           </div>
         </div>
 
-        {/* Intro: ¿Qué es Manito? */}
+        {/* Intro */}
         <details className="group mb-4 bg-white rounded-2xl border border-stone-100 overflow-hidden">
           <summary className="flex items-center justify-between p-5 cursor-pointer list-none">
             <span
@@ -99,7 +130,7 @@ export default function MaestroPage() {
             >
               ¿Qué es Manito y para qué te sirve?
             </span>
-            <span className="text-stone-400 text-xs transition-transform duration-200 group-open:rotate-180">
+            <span className="text-stone-400 text-lg transition-transform duration-200 group-open:rotate-180">
               ▾
             </span>
           </summary>
@@ -127,10 +158,7 @@ export default function MaestroPage() {
         {/* Founders callout */}
         <div
           className="mb-6 rounded-2xl p-5 border"
-          style={{
-            backgroundColor: TEAL_LIGHT,
-            borderColor: `${TEAL}30`,
-          }}
+          style={{ backgroundColor: TEAL_LIGHT, borderColor: `${TEAL}30` }}
         >
           <h3
             className="font-semibold mb-2"
@@ -139,13 +167,13 @@ export default function MaestroPage() {
               fontFamily: "var(--font-rubik), sans-serif",
             }}
           >
-            Eres un maestro founder 🌟
+            Eres un maestro fundador 🌟
           </h3>
           <p className="text-stone-700 text-sm leading-relaxed">
             Estás entre los primeros maestros en probar Manito. Martín va a
             coordinar una videollamada de WhatsApp contigo para acompañarte en
             el recorrido de todas las funciones. Eso es adicional a estas
-            misiones — te va a contactar en los próximos días.
+            misiones. Te va a contactar en los próximos días.
           </p>
         </div>
 
@@ -154,7 +182,7 @@ export default function MaestroPage() {
           className="font-semibold text-stone-800 mb-3 text-lg"
           style={{ fontFamily: "var(--font-rubik), sans-serif" }}
         >
-          Tus 13 misiones
+          Tus {maestroMissions.length} misiones
         </h2>
         <div className="space-y-3 mb-10">
           {maestroMissions.map((mission) => (
@@ -163,8 +191,9 @@ export default function MaestroPage() {
               mission={mission}
               accent={TEAL}
               accentLight={TEAL_LIGHT}
-              completed={completed}
-              onToggle={toggle}
+              feedback={feedback}
+              onComplete={complete}
+              onUncomplete={uncomplete}
             />
           ))}
         </div>
@@ -177,56 +206,72 @@ export default function MaestroPage() {
           >
             Cuando termines
           </h2>
-          <p className="text-stone-600 text-sm mb-5 leading-relaxed">
-            Mándanos tres audios de WhatsApp — uno por cada categoría. No tienes
-            que escribir nada. Un audio de 1 a 3 minutos por categoría está
-            perfecto.
+          <p className="text-stone-600 text-sm mb-4 leading-relaxed">
+            Mándanos un audio de WhatsApp con tus impresiones sobre la app. No
+            tienes que preparar nada, habla natural. Puedes comentar sobre
+            cualquier cosa, por ejemplo:
           </p>
+
+          <div className="space-y-2 mb-5">
+            {[
+              {
+                emoji: "💭",
+                text: "¿Ves cómo Manito te podría ayudar a conseguir más pega o a organizar mejor tu trabajo? La impresión honesta, buena o mala.",
+              },
+              {
+                emoji: "🐛",
+                text: "Cosas que no funcionaron o no entendiste: qué pantalla, qué pasó, qué hiciste antes.",
+              },
+              {
+                emoji: "🧭",
+                text: "Qué tan fácil o difícil fue navegar: ¿hubo algún momento donde no supiste adónde ir o qué hacer?",
+              },
+            ].map((item) => (
+              <div
+                key={item.text}
+                className="flex gap-3 p-3 bg-stone-50 rounded-xl"
+              >
+                <span className="text-base shrink-0">{item.emoji}</span>
+                <p className="text-stone-600 text-xs leading-relaxed">
+                  {item.text}
+                </p>
+              </div>
+            ))}
+          </div>
 
           <a
             href="https://wa.me/16088933997"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 w-full py-3 text-white rounded-xl font-medium text-sm transition-opacity hover:opacity-90 mb-5"
+            className="flex items-center justify-center gap-2 w-full py-3 text-white rounded-xl font-medium text-sm transition-opacity hover:opacity-90"
             style={{ backgroundColor: "#25D366" }}
           >
-            <span>💬</span> Escríbenos por WhatsApp
+            <span>💬</span> Mandar audio por WhatsApp
           </a>
 
-          <div className="space-y-2.5">
-            {[
-              {
-                emoji: "💭",
-                title: "Audio 1 — Tu impresión general",
-                desc: "¿Ves cómo Manito te podría ayudar a conseguir más pega o a organizar mejor tu trabajo? La impresión honesta, buena o mala.",
-              },
-              {
-                emoji: "🐛",
-                title: "Audio 2 — Bugs o cosas que no funcionaron",
-                desc: "Qué pasó, en qué pantalla estabas, qué hiciste justo antes, qué fue lo que ocurrió. Entre más detalle, mejor.",
-              },
-              {
-                emoji: "🧭",
-                title: "Audio 3 — Navegación",
-                desc: "¿Qué tan fácil fue encontrar lo que buscabas? ¿Hubo algún momento donde no supiste adónde ir o qué hacer?",
-              },
-            ].map((item) => (
-              <div
-                key={item.title}
-                className="flex gap-3 p-3.5 bg-stone-50 rounded-xl"
-              >
-                <span className="text-lg mt-0.5 shrink-0">{item.emoji}</span>
-                <div>
-                  <p className="font-medium text-stone-800 text-sm">
-                    {item.title}
-                  </p>
-                  <p className="text-stone-500 text-xs mt-1 leading-relaxed">
-                    {item.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
+          <div className="flex items-center gap-3 my-5">
+            <div className="flex-1 h-px bg-stone-100" />
+            <span className="text-xs text-stone-400 shrink-0">
+              o escríbenos aquí
+            </span>
+            <div className="flex-1 h-px bg-stone-100" />
           </div>
+
+          <textarea
+            value={writeText}
+            onChange={(e) => setWriteText(e.target.value)}
+            placeholder="Escribe tu feedback aquí y lo enviamos por WhatsApp..."
+            className="w-full rounded-xl border border-stone-200 p-3.5 text-sm text-stone-700 placeholder-stone-400 resize-none outline-none focus:border-stone-300 transition-colors mb-3"
+            rows={4}
+          />
+
+          <button
+            onClick={handleSendText}
+            className="w-full py-3 rounded-xl font-medium text-sm transition-opacity hover:opacity-90 border-2"
+            style={{ borderColor: "#25D366", color: "#25D366" }}
+          >
+            Enviar por WhatsApp
+          </button>
         </div>
       </div>
     </div>

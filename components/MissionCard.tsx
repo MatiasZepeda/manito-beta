@@ -3,28 +3,46 @@
 import { useState } from "react";
 import type { Mission } from "@/lib/content";
 
+export interface MissionFeedback {
+  ease: number;
+  comment: string;
+}
+
 interface MissionCardProps {
   mission: Mission;
   accent: string;
   accentLight: string;
-  completed: string[];
-  onToggle: (id: string) => void;
+  feedback: Record<string, MissionFeedback>;
+  onComplete: (id: string, data: MissionFeedback) => void;
+  onUncomplete: (id: string) => void;
 }
+
+const EASE_EMOJIS = ["", "😤", "😕", "😐", "😊", "🎉"];
+const EASE_LABELS = ["", "Muy difícil", "Difícil", "Normal", "Fácil", "Muy fácil"];
 
 export function MissionCard({
   mission,
   accent,
   accentLight,
-  completed,
-  onToggle,
+  feedback,
+  onComplete,
+  onUncomplete,
 }: MissionCardProps) {
   const [expanded, setExpanded] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [ease, setEase] = useState(0);
+  const [comment, setComment] = useState("");
 
-  const completedCount = mission.objectives.filter((o) =>
-    completed.includes(o.id)
-  ).length;
-  const total = mission.objectives.length;
-  const isComplete = completedCount === total;
+  const mf = feedback[mission.id];
+  const isComplete = !!mf;
+
+  const handleSave = () => {
+    onComplete(mission.id, { ease, comment });
+    setShowForm(false);
+    setExpanded(false);
+    setEase(0);
+    setComment("");
+  };
 
   return (
     <div
@@ -68,24 +86,15 @@ export function MissionCard({
               </span>
             )}
           </div>
-          <div className="mt-2 flex items-center gap-2">
-            <div className="flex-1 h-1.5 bg-stone-100 rounded-full overflow-hidden">
-              <div
-                className="h-full rounded-full transition-all duration-500"
-                style={{
-                  width: `${(completedCount / total) * 100}%`,
-                  backgroundColor: accent,
-                }}
-              />
-            </div>
-            <span className="text-xs text-stone-400 shrink-0 tabular-nums">
-              {completedCount}/{total}
-            </span>
-          </div>
+          {isComplete && mf.ease > 0 && (
+            <p className="text-xs text-stone-400 mt-1">
+              {EASE_EMOJIS[mf.ease]} {EASE_LABELS[mf.ease]}
+            </p>
+          )}
         </div>
 
         <span
-          className="text-stone-400 mt-1 transition-transform duration-200 text-xs"
+          className="shrink-0 text-stone-400 text-lg mt-0.5 leading-none transition-transform duration-200"
           style={{ transform: expanded ? "rotate(180deg)" : "rotate(0deg)" }}
         >
           ▾
@@ -107,68 +116,95 @@ export function MissionCard({
                 color: accent,
               }}
             >
-              <strong>Para founders:</strong> {mission.foundersNote}
+              <strong>Para maestros fundadores:</strong> {mission.foundersNote}
             </div>
           )}
 
-          <div className="space-y-3">
-            {mission.objectives.map((obj) => {
-              const checked = completed.includes(obj.id);
-              return (
-                <div key={obj.id}>
-                  <button
-                    onClick={() => onToggle(obj.id)}
-                    className="w-full flex items-start gap-3 text-left"
-                  >
-                    <div
-                      className="mt-0.5 shrink-0 w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all"
+          {!isComplete && !showForm && (
+            <button
+              onClick={() => setShowForm(true)}
+              className="w-full py-3 rounded-xl font-medium text-sm text-white transition-opacity hover:opacity-90"
+              style={{ backgroundColor: accent }}
+            >
+              Marcar como completada
+            </button>
+          )}
+
+          {!isComplete && showForm && (
+            <div className="space-y-4">
+              <div>
+                <p
+                  className="text-sm font-medium text-stone-800 mb-3"
+                  style={{ fontFamily: "var(--font-rubik), sans-serif" }}
+                >
+                  ¿Qué tan fácil fue esta misión?
+                </p>
+                <div className="flex gap-2">
+                  {[1, 2, 3, 4, 5].map((n) => (
+                    <button
+                      key={n}
+                      onClick={() => setEase(n)}
+                      className="flex-1 py-3 rounded-xl text-xl transition-all duration-150 border-2"
                       style={{
-                        backgroundColor: checked ? accent : "white",
-                        borderColor: checked ? accent : `${accent}60`,
+                        backgroundColor: ease === n ? accent : "#f5f5f4",
+                        borderColor: ease === n ? accent : "transparent",
                       }}
                     >
-                      {checked && (
-                        <svg
-                          width="10"
-                          height="8"
-                          viewBox="0 0 10 8"
-                          fill="none"
-                        >
-                          <path
-                            d="M1 4L3.5 6.5L9 1"
-                            stroke="white"
-                            strokeWidth="1.8"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      )}
-                    </div>
-                    <span
-                      className="text-sm leading-relaxed transition-colors"
-                      style={{
-                        color: checked ? "#a8a29e" : "#1c1c1c",
-                        textDecoration: checked ? "line-through" : "none",
-                      }}
-                    >
-                      {obj.text}
-                    </span>
-                  </button>
-                  {obj.tip && !checked && (
-                    <div
-                      className="mt-1.5 ml-8 rounded-lg px-3 py-2 text-xs leading-relaxed"
-                      style={{
-                        backgroundColor: accentLight,
-                        color: accent,
-                      }}
-                    >
-                      💡 {obj.tip}
-                    </div>
-                  )}
+                      {EASE_EMOJIS[n]}
+                    </button>
+                  ))}
                 </div>
-              );
-            })}
-          </div>
+                {ease > 0 && (
+                  <p className="text-xs text-stone-500 mt-2 text-center">
+                    {EASE_LABELS[ease]}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <textarea
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  placeholder="¿Algo que te confundió o te gustó? (opcional)"
+                  className="w-full rounded-xl border border-stone-200 p-3.5 text-sm text-stone-700 placeholder-stone-400 resize-none outline-none focus:border-stone-300 transition-colors"
+                  rows={3}
+                />
+              </div>
+
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowForm(false)}
+                  className="flex-1 py-3 rounded-xl text-sm font-medium text-stone-500 bg-stone-100 hover:bg-stone-200 transition-colors"
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={handleSave}
+                  disabled={ease === 0}
+                  className="flex-1 py-3 rounded-xl text-sm font-medium text-white transition-opacity disabled:opacity-40"
+                  style={{ backgroundColor: accent }}
+                >
+                  Guardar
+                </button>
+              </div>
+            </div>
+          )}
+
+          {isComplete && (
+            <div>
+              {mf.comment && (
+                <div className="mb-3 rounded-xl p-3.5 bg-stone-50 text-xs text-stone-600 leading-relaxed italic">
+                  "{mf.comment}"
+                </div>
+              )}
+              <button
+                onClick={() => onUncomplete(mission.id)}
+                className="text-xs text-stone-400 underline underline-offset-2 hover:text-stone-600 transition-colors"
+              >
+                Desmarcar misión
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

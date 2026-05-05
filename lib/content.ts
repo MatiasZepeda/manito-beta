@@ -159,22 +159,6 @@ export const clienteMissions: Mission[] = [
     ],
   },
   {
-    id: "c8",
-    number: 8,
-    title: "Agrega un método de pago",
-    description:
-      "En esta beta el cobro real está desactivado — no te vamos a cobrar nada. Pero queremos ver si el flujo de agregar una tarjeta o método de pago se entiende solo.",
-    objectives: [
-      {
-        id: "c8-1",
-        text: "Busca la sección de pagos en tu perfil",
-        tip: "Tranquilo, no hay ningún cobro real en esta fase",
-      },
-      { id: "c8-2", text: "Agrega una tarjeta u otro método de pago" },
-      { id: "c8-3", text: "Confirma que quedó registrado correctamente" },
-    ],
-  },
-  {
     id: "cA",
     number: "A",
     title: "Inicia una disputa de cargo",

@@ -13,9 +13,9 @@ export default function Home() {
         <Image
           src="/logo.png"
           alt="Manito"
-          width={160}
-          height={80}
-          className="h-20 w-auto object-contain mx-auto mb-6"
+          width={200}
+          height={100}
+          className="h-24 w-auto object-contain mx-auto mb-6"
           priority
         />
         <span
