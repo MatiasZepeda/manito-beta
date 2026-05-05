@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -9,8 +10,16 @@ export default function Home() {
       style={{ backgroundColor: "#fdf9f6" }}
     >
       <div className="text-center mb-12 max-w-lg">
+        <Image
+          src="/logo.png"
+          alt="Manito"
+          width={160}
+          height={80}
+          className="h-20 w-auto object-contain mx-auto mb-6"
+          priority
+        />
         <span
-          className="inline-block px-3 py-1 text-xs font-medium rounded-full mb-6 uppercase tracking-wide"
+          className="inline-block px-3 py-1 text-xs font-medium rounded-full mb-5 uppercase tracking-wide"
           style={{
             backgroundColor: "#fde8e1",
             color: "#f26a4b",
@@ -23,9 +32,7 @@ export default function Home() {
           className="text-4xl font-bold text-stone-900 mb-4 leading-tight"
           style={{ fontFamily: "var(--font-rubik), sans-serif" }}
         >
-          Gracias por probar
-          <br />
-          <span style={{ color: "#f26a4b" }}>Manito</span>
+          Gracias por probar Manito
         </h1>
         <p className="text-stone-600 text-lg leading-relaxed">
           Esta guía te explica qué queremos que pruebes y cómo mandarnos tu

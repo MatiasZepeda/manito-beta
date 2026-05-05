@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Rubik, DM_Sans } from "next/font/google";
 import Link from "next/link";
+import Image from "next/image";
 import "./globals.css";
 
 const rubik = Rubik({
@@ -34,22 +35,23 @@ export default function RootLayout({
         <nav className="sticky top-0 z-50 bg-white border-b border-stone-100 shadow-sm">
           <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
-              <div
-                className="w-7 h-7 rounded-lg flex items-center justify-center"
-                style={{ backgroundColor: "#f26a4b" }}
-              >
-                <span
-                  className="text-white text-sm font-bold"
-                  style={{ fontFamily: "var(--font-rubik), sans-serif" }}
-                >
-                  M
-                </span>
-              </div>
+              <Image
+                src="/logo.png"
+                alt="Manito"
+                width={80}
+                height={40}
+                className="h-8 w-auto object-contain"
+                priority
+              />
               <span
-                className="font-semibold text-stone-900"
-                style={{ fontFamily: "var(--font-rubik), sans-serif" }}
+                className="text-xs font-medium px-2 py-0.5 rounded-full"
+                style={{
+                  backgroundColor: "#fde8e1",
+                  color: "#f26a4b",
+                  fontFamily: "var(--font-rubik), sans-serif",
+                }}
               >
-                Manito Beta
+                Beta
               </span>
             </Link>
             <div className="flex items-center gap-1">
