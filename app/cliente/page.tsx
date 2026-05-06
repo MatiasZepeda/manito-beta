@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { clienteMissions } from "@/lib/content";
 import { MissionCard } from "@/components/MissionCard";
 import type { MissionFeedback } from "@/components/MissionCard";
+import { isSurveyDone } from "@/lib/session";
 
 const STORAGE_KEY = "manito-beta-cliente-v2";
 const CORAL = "#f26a4b";
@@ -13,10 +15,13 @@ export default function ClientePage() {
   const [feedback, setFeedback] = useState<Record<string, MissionFeedback>>({});
   const [ready, setReady] = useState(false);
   const [writeText, setWriteText] = useState("");
+  const [surveyDone, setSurveyDone] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) setFeedback(JSON.parse(saved));
+    setSurveyDone(isSurveyDone());
     setReady(true);
   }, []);
 
@@ -36,6 +41,7 @@ export default function ClientePage() {
   const required = clienteMissions.filter((m) => !m.optional);
   const optional = clienteMissions.filter((m) => m.optional);
   const completedMissions = required.filter((m) => feedback[m.id]).length;
+  const allRequiredDone = completedMissions === required.length;
 
   const handleSendText = () => {
     const msg = encodeURIComponent(
@@ -225,6 +231,51 @@ export default function ClientePage() {
             />
           ))}
         </div>
+
+        {/* Survey banner */}
+        {allRequiredDone && !surveyDone && (
+          <div
+            className="mb-6 rounded-2xl p-5 border-2 text-center"
+            style={{ backgroundColor: "#fde8e1", borderColor: "#f26a4b" }}
+          >
+            <p className="text-2xl mb-2">🎯</p>
+            <h3
+              className="font-bold text-stone-900 mb-2"
+              style={{ fontFamily: "var(--font-rubik), sans-serif" }}
+            >
+              ¡Terminaste todas las misiones!
+            </h3>
+            <p className="text-stone-600 text-sm mb-4 leading-relaxed">
+              Ahora viene lo más importante: el cuestionario final. Son 7
+              preguntas y menos de 5 minutos.
+            </p>
+            <button
+              onClick={() => router.push("/encuesta")}
+              className="w-full py-3 rounded-xl text-white font-semibold text-sm transition-opacity hover:opacity-90"
+              style={{ backgroundColor: "#f26a4b", fontFamily: "var(--font-rubik), sans-serif" }}
+            >
+              Ir al cuestionario final →
+            </button>
+          </div>
+        )}
+
+        {allRequiredDone && surveyDone && (
+          <div
+            className="mb-6 rounded-2xl p-5 border-2 text-center"
+            style={{ backgroundColor: "#f0fdf4", borderColor: "#86efac" }}
+          >
+            <p className="text-2xl mb-2">✅</p>
+            <h3
+              className="font-bold text-stone-900 mb-1"
+              style={{ fontFamily: "var(--font-rubik), sans-serif" }}
+            >
+              ¡Cuestionario completado!
+            </h3>
+            <p className="text-stone-600 text-sm leading-relaxed">
+              Gracias por tu feedback. Te contactaremos pronto.
+            </p>
+          </div>
+        )}
 
         {/* Feedback */}
         <div className="bg-white rounded-2xl border-2 border-stone-100 p-6">
