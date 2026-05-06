@@ -42,7 +42,12 @@ export default function RegistroPage() {
       setErrors(errs);
       return;
     }
-    saveProfile({ name: name.trim(), email: email.trim(), phone: phone.trim(), os: os! });
+    const profile = saveProfile({ name: name.trim(), email: email.trim(), phone: phone.trim(), os: os! });
+    fetch("/api/sync/profile", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(profile),
+    }).catch(() => {});
     router.push("/");
   };
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getRole, markSurveyDone, isSurveyDone } from "@/lib/session";
+import { getRole, markSurveyDone, isSurveyDone, getProfile } from "@/lib/session";
 
 const CORAL = "#f26a4b";
 const CORAL_LIGHT = "#fde8e1";
@@ -131,6 +131,17 @@ export default function EncuestaPage() {
     };
     localStorage.setItem("manito_survey_data", JSON.stringify(data));
     markSurveyDone();
+    const profile = getProfile();
+    if (profile) {
+      fetch("/api/sync/survey", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          session_id: profile.session_id,
+          ...data,
+        }),
+      }).catch(() => {});
+    }
     setDone(true);
   };
 

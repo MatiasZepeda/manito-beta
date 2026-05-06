@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { maestroMissions } from "@/lib/content";
 import { MissionCard } from "@/components/MissionCard";
 import type { MissionFeedback } from "@/components/MissionCard";
-import { isSurveyDone } from "@/lib/session";
+import { isSurveyDone, getProfile, getRole } from "@/lib/session";
 
 const STORAGE_KEY = "manito-beta-maestro-v2";
 const TEAL = "#1a7f8e";
@@ -29,6 +29,21 @@ export default function MaestroPage() {
     const next = { ...feedback, [id]: data };
     setFeedback(next);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    const profile = getProfile();
+    if (profile) {
+      fetch("/api/sync/mission", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          session_id: profile.session_id,
+          mission_id: id,
+          role: getRole() ?? "maestro",
+          ease: data.ease,
+          comment: data.comment,
+          action: "complete",
+        }),
+      }).catch(() => {});
+    }
   };
 
   const uncomplete = (id: string) => {
@@ -36,6 +51,18 @@ export default function MaestroPage() {
     delete next[id];
     setFeedback(next);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    const profile = getProfile();
+    if (profile) {
+      fetch("/api/sync/mission", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          session_id: profile.session_id,
+          mission_id: id,
+          action: "uncomplete",
+        }),
+      }).catch(() => {});
+    }
   };
 
   const completedMissions = maestroMissions.filter((m) => feedback[m.id]).length;

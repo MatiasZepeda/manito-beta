@@ -58,7 +58,18 @@ export default function Home() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-2xl">
         <button
           className="group block text-left w-full"
-          onClick={() => { setRole("cliente"); router.push("/cliente"); }}
+          onClick={() => {
+            setRole("cliente");
+            const profile = getProfile();
+            if (profile) {
+              fetch("/api/sync/profile", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ ...profile, role: "cliente" }),
+              }).catch(() => {});
+            }
+            router.push("/cliente");
+          }}
         >
           <div
             className="bg-white rounded-2xl p-8 border-2 border-stone-100 text-center cursor-pointer transition-all duration-200 group-hover:shadow-lg"
@@ -95,7 +106,18 @@ export default function Home() {
 
         <button
           className="group block text-left w-full"
-          onClick={() => { setRole("maestro"); router.push("/maestro"); }}
+          onClick={() => {
+            setRole("maestro");
+            const profile = getProfile();
+            if (profile) {
+              fetch("/api/sync/profile", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ ...profile, role: "maestro" }),
+              }).catch(() => {});
+            }
+            router.push("/maestro");
+          }}
         >
           <div
             className="bg-white rounded-2xl p-8 border-2 border-stone-100 text-center cursor-pointer transition-all duration-200 group-hover:shadow-lg"
