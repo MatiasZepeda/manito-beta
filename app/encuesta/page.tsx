@@ -166,8 +166,8 @@ export default function EncuestaPage() {
         </p>
         <div className="bg-white rounded-2xl border border-stone-100 p-5 max-w-xs w-full">
           <p className="text-stone-600 text-sm mb-4 leading-relaxed">
-            Si quieres agregar algo más, mándanos un audio o mensaje por
-            WhatsApp. No es obligatorio.
+            ¿Quieres contarnos algo más? Puedes mandarnos un mensaje o audio
+            por WhatsApp.
           </p>
           <a
             href="https://wa.me/16088933997"
@@ -176,7 +176,7 @@ export default function EncuestaPage() {
             className="flex items-center justify-center gap-2 w-full py-3 text-white rounded-xl font-medium text-sm transition-opacity hover:opacity-90"
             style={{ backgroundColor: "#25D366" }}
           >
-            <span>💬</span> Abrir WhatsApp (opcional)
+            <span>💬</span> Escribir por WhatsApp
           </a>
         </div>
       </div>

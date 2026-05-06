@@ -14,7 +14,6 @@ const TEAL_LIGHT = "#d6f0f3";
 export default function MaestroPage() {
   const [feedback, setFeedback] = useState<Record<string, MissionFeedback>>({});
   const [ready, setReady] = useState(false);
-  const [writeText, setWriteText] = useState("");
   const [surveyDone, setSurveyDone] = useState(false);
   const router = useRouter();
 
@@ -67,13 +66,6 @@ export default function MaestroPage() {
 
   const completedMissions = maestroMissions.filter((m) => feedback[m.id]).length;
   const allRequiredDone = completedMissions === maestroMissions.length;
-
-  const handleSendText = () => {
-    const msg = encodeURIComponent(
-      writeText.trim() || "Hola, tengo feedback sobre la beta de Manito."
-    );
-    window.open(`https://wa.me/16088933997?text=${msg}`, "_blank");
-  };
 
   if (!ready) return null;
 
@@ -276,81 +268,6 @@ export default function MaestroPage() {
           </div>
         )}
 
-        {/* Feedback */}
-        <div className="bg-white rounded-2xl border-2 border-stone-100 p-6">
-          <h2
-            className="font-semibold text-stone-900 text-lg mb-1"
-            style={{ fontFamily: "var(--font-rubik), sans-serif" }}
-          >
-            Cuando termines
-          </h2>
-          <p className="text-stone-600 text-sm mb-4 leading-relaxed">
-            Mándanos un audio de WhatsApp con tus impresiones sobre la app. No
-            tienes que preparar nada, habla natural. Puedes comentar sobre
-            cualquier cosa, por ejemplo:
-          </p>
-
-          <div className="space-y-2 mb-5">
-            {[
-              {
-                emoji: "💭",
-                text: "¿Ves cómo Manito te podría ayudar a conseguir más pega o a organizar mejor tu trabajo? La impresión honesta, buena o mala.",
-              },
-              {
-                emoji: "🐛",
-                text: "Cosas que no funcionaron o no entendiste: qué pantalla, qué pasó, qué hiciste antes.",
-              },
-              {
-                emoji: "🧭",
-                text: "Qué tan fácil o difícil fue navegar: ¿hubo algún momento donde no supiste adónde ir o qué hacer?",
-              },
-            ].map((item) => (
-              <div
-                key={item.text}
-                className="flex gap-3 p-3 bg-stone-50 rounded-xl"
-              >
-                <span className="text-base shrink-0">{item.emoji}</span>
-                <p className="text-stone-600 text-xs leading-relaxed">
-                  {item.text}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <a
-            href="https://wa.me/16088933997"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 w-full py-3 text-white rounded-xl font-medium text-sm transition-opacity hover:opacity-90"
-            style={{ backgroundColor: "#25D366" }}
-          >
-            <span>💬</span> Mandar audio por WhatsApp
-          </a>
-
-          <div className="flex items-center gap-3 my-5">
-            <div className="flex-1 h-px bg-stone-100" />
-            <span className="text-xs text-stone-400 shrink-0">
-              o escríbenos aquí
-            </span>
-            <div className="flex-1 h-px bg-stone-100" />
-          </div>
-
-          <textarea
-            value={writeText}
-            onChange={(e) => setWriteText(e.target.value)}
-            placeholder="Escribe tu feedback aquí y lo enviamos por WhatsApp..."
-            className="w-full rounded-xl border border-stone-200 p-3.5 text-sm text-stone-700 placeholder-stone-400 resize-none outline-none focus:border-stone-300 transition-colors mb-3"
-            rows={4}
-          />
-
-          <button
-            onClick={handleSendText}
-            className="w-full py-3 rounded-xl font-medium text-sm transition-opacity hover:opacity-90 border-2"
-            style={{ borderColor: "#25D366", color: "#25D366" }}
-          >
-            Enviar por WhatsApp
-          </button>
-        </div>
       </div>
     </div>
   );
