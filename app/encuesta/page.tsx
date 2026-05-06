@@ -393,6 +393,22 @@ export default function EncuestaPage() {
           >
             Enviar feedback →
           </button>
+
+          {/* WhatsApp opcional */}
+          <div className="text-center pt-2">
+            <p className="text-xs text-stone-400 mb-2">
+              ¿Prefieres dejar un audio? También puedes mandárnoslo por WhatsApp.
+            </p>
+            <a
+              href="https://wa.me/16088933997"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs font-medium px-4 py-2 rounded-xl border transition-opacity hover:opacity-80"
+              style={{ borderColor: "#25D366", color: "#25D366" }}
+            >
+              <span>💬</span> Abrir WhatsApp
+            </a>
+          </div>
         </form>
       </div>
     </div>
