@@ -10,10 +10,7 @@ export default function Home() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    if (!getProfile()) {
-      router.replace("/registro");
-      return;
-    }
+    // Allow access without profile (registration disabled for now)
     setReady(true);
   }, [router]);
 
