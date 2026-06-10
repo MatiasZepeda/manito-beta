@@ -35,12 +35,12 @@ export function saveProfile(
   return profile;
 }
 
-export function getRole(): "cliente" | "maestro" | null {
+export function getRole(): "cliente" | "profesional" | null {
   if (typeof window === "undefined") return null;
-  return localStorage.getItem(ROLE_KEY) as "cliente" | "maestro" | null;
+  return localStorage.getItem(ROLE_KEY) as "cliente" | "profesional" | null;
 }
 
-export function setRole(role: "cliente" | "maestro"): void {
+export function setRole(role: "cliente" | "profesional"): void {
   localStorage.setItem(ROLE_KEY, role);
 }
 
