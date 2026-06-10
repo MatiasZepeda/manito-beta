@@ -21,13 +21,13 @@ export default function Home() {
       className="min-h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center px-4 py-16"
       style={{ backgroundColor: "#fdf9f6" }}
     >
-      <div className="text-center mb-12 max-w-lg">
+      <div className="text-center mb-16 max-w-lg">
         <Image
           src="/logo.png"
           alt="Manito"
-          width={280}
-          height={140}
-          className="h-40 w-auto object-contain mx-auto mb-8"
+          width={400}
+          height={200}
+          className="h-64 w-auto object-contain mx-auto mb-10"
           priority
         />
         <span
