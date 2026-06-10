@@ -72,7 +72,7 @@ export default function AdminLoginPage() {
             <input
               id="email"
               type="email"
-              placeholder="matias@manito-beta.app"
+              placeholder="tu@email.app"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2 border border-stone-200 rounded-lg text-sm outline-none focus:border-stone-400"

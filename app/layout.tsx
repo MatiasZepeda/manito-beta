@@ -56,9 +56,14 @@ export default function RootLayout({
             </Link>
             <div className="flex items-center gap-1">
               <Link
+                href="/"
+                className="px-3 py-1.5 text-sm font-medium rounded-lg text-stone-600 transition-colors hover:bg-stone-100"
+              >
+                Home
+              </Link>
+              <Link
                 href="/cliente"
                 className="px-3 py-1.5 text-sm font-medium rounded-lg text-stone-600 transition-colors hover:bg-orange-50"
-                style={{ color: undefined }}
               >
                 Cliente
               </Link>
@@ -67,12 +72,6 @@ export default function RootLayout({
                 className="px-3 py-1.5 text-sm font-medium rounded-lg text-stone-600 transition-colors hover:bg-teal-50"
               >
                 Profesional
-              </Link>
-              <Link
-                href="/feedback"
-                className="px-3 py-1.5 text-sm font-medium rounded-lg text-stone-600 hover:bg-stone-100 transition-colors"
-              >
-                Feedback
               </Link>
             </div>
           </div>

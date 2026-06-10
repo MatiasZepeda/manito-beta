@@ -50,6 +50,10 @@ export default function Home() {
           Esta guía te explica qué queremos que pruebes y cómo mandarnos tu
           feedback. Elige tu rol para empezar.
         </p>
+        <p className="text-stone-500 text-sm leading-relaxed mt-3">
+          Completa todas las misiones y al final dejanos tu feedback. Sin tu opinión,
+          no podemos mejorar Manito.
+        </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-2xl">
