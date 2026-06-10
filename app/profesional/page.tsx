@@ -64,8 +64,10 @@ export default function ProfesionalPage() {
     }
   };
 
-  const completedMissions = profesionalMissions.filter((m) => feedback[m.id]).length;
-  const allRequiredDone = completedMissions === profesionalMissions.length;
+  const required = profesionalMissions.filter((m) => !m.optional);
+  const optional = profesionalMissions.filter((m) => m.optional);
+  const completedMissions = required.filter((m) => feedback[m.id]).length;
+  const allRequiredDone = completedMissions === required.length;
 
   if (!ready) return null;
 
@@ -122,7 +124,7 @@ export default function ProfesionalPage() {
           <div className="mt-5 bg-white rounded-xl p-4 border border-stone-100">
             <div className="flex justify-between text-sm mb-2">
               <span className="text-stone-600 font-medium">
-                Misiones completadas
+                Misiones principales completadas
               </span>
               <span
                 className="font-bold"
@@ -131,14 +133,14 @@ export default function ProfesionalPage() {
                   fontFamily: "var(--font-rubik), sans-serif",
                 }}
               >
-                {completedMissions}/{profesionalMissions.length}
+                {completedMissions}/{required.length}
               </span>
             </div>
             <div className="h-2 bg-stone-100 rounded-full overflow-hidden">
               <div
                 className="h-full rounded-full transition-all duration-500"
                 style={{
-                  width: `${(completedMissions / profesionalMissions.length) * 100}%`,
+                  width: `${(completedMissions / required.length) * 100}%`,
                   backgroundColor: TEAL,
                 }}
               />
@@ -202,15 +204,39 @@ export default function ProfesionalPage() {
           </p>
         </div>
 
-        {/* Missions */}
+        {/* Main missions */}
         <h2
           className="font-semibold text-stone-800 mb-3 text-lg"
           style={{ fontFamily: "var(--font-rubik), sans-serif" }}
         >
-          Tus {profesionalMissions.length} misiones
+          Misiones principales
         </h2>
+        <div className="space-y-3 mb-8">
+          {required.map((mission) => (
+            <MissionCard
+              key={mission.id}
+              mission={mission}
+              accent={TEAL}
+              accentLight={TEAL_LIGHT}
+              feedback={feedback}
+              onComplete={complete}
+              onUncomplete={uncomplete}
+            />
+          ))}
+        </div>
+
+        {/* Optional missions */}
+        <h2
+          className="font-semibold text-stone-800 mb-1 text-lg"
+          style={{ fontFamily: "var(--font-rubik), sans-serif" }}
+        >
+          Misiones opcionales
+        </h2>
+        <p className="text-stone-500 text-sm mb-3">
+          Solo si te las asignamos específicamente.
+        </p>
         <div className="space-y-3 mb-10">
-          {profesionalMissions.map((mission) => (
+          {optional.map((mission) => (
             <MissionCard
               key={mission.id}
               mission={mission}
