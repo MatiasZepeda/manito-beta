@@ -249,28 +249,30 @@ export default function ProfesionalPage() {
           ))}
         </div>
 
-        {/* Feedback section (disabled until survey done) */}
-        <div
-          className="mb-6 rounded-2xl p-5 border-2 opacity-50"
-          style={{ backgroundColor: "#f5f5f4", borderColor: "#d4d4d0" }}
-        >
-          <p className="text-lg mb-2">💬</p>
-          <h3
-            className="font-bold text-stone-900 mb-1"
-            style={{ fontFamily: "var(--font-rubik), sans-serif" }}
+        {/* Feedback section or Survey banner */}
+        {!allRequiredDone && (
+          <div
+            className="mb-6 rounded-2xl p-5 border-2 opacity-50"
+            style={{ backgroundColor: "#f5f5f4", borderColor: "#d4d4d0" }}
           >
-            Tu feedback
-          </h3>
-          <p className="text-stone-600 text-sm leading-relaxed mb-3">
-            Completa todas las misiones y responde el cuestionario final para dejar tu feedback.
-          </p>
-          <button
-            disabled
-            className="w-full py-3 rounded-xl text-stone-400 font-semibold text-sm bg-stone-100 cursor-not-allowed"
-          >
-            Disponible después de las misiones →
-          </button>
-        </div>
+            <p className="text-lg mb-2">💬</p>
+            <h3
+              className="font-bold text-stone-900 mb-1"
+              style={{ fontFamily: "var(--font-rubik), sans-serif" }}
+            >
+              Tu feedback
+            </h3>
+            <p className="text-stone-600 text-sm leading-relaxed mb-3">
+              Completa todas las misiones y responde el cuestionario final para dejar tu feedback.
+            </p>
+            <button
+              disabled
+              className="w-full py-3 rounded-xl text-stone-400 font-semibold text-sm bg-stone-100 cursor-not-allowed"
+            >
+              Disponible después de las misiones →
+            </button>
+          </div>
+        )}
 
         {/* Survey banner */}
         {allRequiredDone && !surveyDone && (
