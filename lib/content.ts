@@ -20,21 +20,17 @@ export const clienteMissions: Mission[] = [
     number: 1,
     title: "Agrega tu primera propiedad",
     description:
-      "Antes de pedir cualquier servicio, Manito necesita saber dónde se va a hacer el trabajo. Tu misión es registrar la propiedad donde vives o donde necesitas el servicio.",
+      "Antes de pedir cualquier servicio, Manito necesita saber dónde se va a hacer el trabajo. Tu misión termina cuando tu propiedad quedó guardada y la puedes ver en tu perfil.",
     objectives: [
-      { id: "c1-1", text: "Abre la app y busca dónde agregar una propiedad" },
+      {
+        id: "c1-1",
+        text: "Logra que tu propiedad quede registrada con su dirección y detalles",
+        tip: "¿el autocompletado funcionó bien para tu dirección?",
+      },
       {
         id: "c1-2",
-        text: "Ingresa la dirección de tu propiedad",
-        tip: "Prueba el autocompletado — ¿funciona bien para tu dirección?",
-      },
-      {
-        id: "c1-3",
-        text: "Completa el tipo de propiedad y los detalles que te pidan",
-      },
-      {
-        id: "c1-4",
-        text: "Confirma que quedó guardada y aparece en tu perfil",
+        text: "Confirma que aparece guardada en tu perfil",
+        tip: "¿fue fácil encontrar dónde se agregaba?",
       },
     ],
   },
@@ -47,130 +43,109 @@ export const clienteMissions: Mission[] = [
     objectives: [
       {
         id: "c2-1",
-        text: "Encuentra desde dónde se solicita un servicio",
-        tip: "¿Fue obvio desde la pantalla de inicio?",
+        text: "Logra que tu solicitud de limpieza quede enviada",
+        tip: "¿fue obvio desde dónde se partía?",
       },
-      { id: "c2-2", text: 'Elige "limpieza" como tipo de servicio' },
       {
-        id: "c2-3",
-        text: "Rellena el formulario con las preguntas del trabajo",
-        tip: "¿Alguna pregunta te confundió o no sabías qué responder?",
+        id: "c2-2",
+        text: "Responde las preguntas del trabajo",
+        tip: "¿alguna pregunta te confundió o no sabías qué responder?",
       },
-      { id: "c2-4", text: "Sube una foto si quieres (es opcional)" },
-      {
-        id: "c2-5",
-        text: "Revisa el resumen final antes de enviar",
-        tip: "¿Quedó claro que al presionar siguiente se enviaba la solicitud?",
-      },
-      { id: "c2-6", text: "Envía la solicitud y confirma que quedó enviada" },
+      { id: "c2-3", text: "Si quieres, agrega una foto (es opcional)" },
+      { id: "c2-4", text: "Confirma que quedó enviada" },
     ],
   },
   {
     id: "c3",
     number: 3,
-    title: "Revisa tu proyecto y las cotizaciones",
+    title: "Entérate de cómo va tu soli",
     description:
-      "Una vez enviada la solicitud, busca tu proyecto en la sección de proyectos y explora lo que llegó. Cada cotización muestra quién es el profesional, cuánto cobra y el tiempo estimado.",
+      "Ya enviaste tu solicitud. Ahora averigua en qué está: encuentra tu proyecto y revisa las cotizaciones que llegaron. Tu reto es entender qué te está ofreciendo cada profesional.",
     objectives: [
-      { id: "c3-1", text: "Ve a la sección de proyectos de la app" },
-      { id: "c3-2", text: "Encuentra el proyecto que acabas de crear" },
+      { id: "c3-1", text: "Encuentra el proyecto que acabas de crear" },
       {
-        id: "c3-3",
-        text: "Revisa el estado actual y las cotizaciones recibidas",
-        tip: "¿Entendiste lo que te estaban ofreciendo?",
-      },
-      {
-        id: "c3-4",
-        text: "Si hay más de una cotización, compáralas",
-        tip: "¿Fue fácil navegar desde la solicitud hasta ver las cotizaciones?",
+        id: "c3-2",
+        text: "Revisa las cotizaciones recibidas y compáralas si hay más de una",
+        tip: "¿entendiste qué incluía cada oferta y en qué se diferenciaban?",
       },
     ],
   },
   {
     id: "c4",
     number: 4,
-    title: "Agrega a alguien como favorito",
+    title: "Contrata a un profesional",
     description:
-      "En Manito puedes guardar profesionals de confianza para contratarlos fácilmente de nuevo. Busca cómo hacerlo.",
+      "Elige la cotización que más te convenza y llega hasta tener la visita agendada con fecha y hora. No te decimos dónde — queremos ver si llegas solo.",
     objectives: [
-      { id: "c4-1", text: "Encuentra el perfil de un profesional dentro de la app" },
-      { id: "c4-2", text: "Agrégalo a tus favoritos" },
       {
-        id: "c4-3",
-        text: "Confirma que aparece en tu lista de favoritos",
-        tip: "¿Fue fácil encontrar la opción de favorito?",
+        id: "c4-1",
+        text: "Acepta la cotización que prefieras",
+        tip: "¿tuviste toda la información que necesitabas para decidir?",
+      },
+      {
+        id: "c4-2",
+        text: "Deja la visita agendada con fecha y hora confirmadas",
+        tip: "¿quedó claro qué pasa después de confirmar?",
       },
     ],
   },
   {
     id: "c5",
     number: 5,
-    title: "Habla con Manny",
+    title: "Coordina un detalle con tu profesional",
     description:
-      "Manny es el asistente de Manito. Puede ayudarte a diagnosticar un problema o encontrar el tipo de servicio que necesitas. Pruébalo como si tuvieras un problema real en tu casa.",
+      "Necesitas avisarle algo antes de la visita — un dato del acceso, dónde estacionar, lo que sea. Logra que ese mensaje le llegue.",
     objectives: [
-      { id: "c5-1", text: "Busca a Manny dentro de la app" },
       {
-        id: "c5-2",
-        text: "Cuéntale sobre algún problema en tu casa",
-        tip: "Puede ser real o inventado — lo que importa es ver cómo responde",
-      },
-      {
-        id: "c5-3",
-        text: "Sigue el flujo que te sugiere hasta donde llegues",
-      },
-      {
-        id: "c5-4",
-        text: "¿Manny te ayudó a llegar a alguna solución o recomendación?",
-        tip: "Cuéntanos en el feedback si la conversación fue útil o se cortó en algún punto",
+        id: "c5-1",
+        text: "Hazle llegar un mensaje al profesional de tu proyecto",
+        tip: "¿preferirías esto o WhatsApp? ¿por qué?",
       },
     ],
   },
   {
     id: "c6",
     number: 6,
-    title: "Notificaciones y preferencias",
+    title: "Cierra el trabajo",
     description:
-      "La app te manda avisos sobre el estado de tus proyectos y otros eventos. Explora qué tipos de notificaciones existen y ajusta lo que quieras.",
+      "Cuando el profesional marque el trabajo como terminado, te toca a ti. Tu misión termina cuando el proyecto quedó confirmado con calificación.",
     objectives: [
-      { id: "c6-1", text: "Busca la sección de notificaciones o preferencias" },
-      { id: "c6-2", text: "Revisa qué notificaciones tienes activas" },
       {
-        id: "c6-3",
-        text: "Ajusta alguna preferencia",
-        tip: "¿Quedó claro para qué sirve cada tipo de notificación?",
+        id: "c6-1",
+        text: "Confirma que el trabajo quedó terminado",
+        tip: "¿entendiste qué estabas confirmando exactamente?",
+      },
+      {
+        id: "c6-2",
+        text: "Deja una calificación y comentario al profesional",
+        tip: "¿el formato de calificación te permitió decir lo que querías?",
       },
     ],
   },
   {
     id: "c7",
     number: 7,
-    title: "Cambia tu contraseña",
+    title: "Habla con Manny",
     description:
-      "Función básica que igual hay que probar. Busca cómo cambiar tu contraseña sin que nadie te diga dónde está.",
+      "Manny es el asistente de Manito. Pruébalo como si tuvieras un problema real en tu casa — puede ser real o inventado.",
     objectives: [
-      { id: "c7-1", text: "Ve a la configuración de tu cuenta o perfil" },
-      { id: "c7-2", text: "Busca la opción de cambiar contraseña" },
       {
-        id: "c7-3",
-        text: "Completa el proceso",
-        tip: "¿Fue intuitivo encontrarlo o tuviste que buscar un rato?",
+        id: "c7-1",
+        text: "Cuéntale un problema de tu casa y sigue la conversación hasta donde llegue",
+        tip: "¿te ayudó a llegar a una solución? ¿en algún punto se cortó?",
       },
     ],
   },
   {
     id: "cA",
     number: "A",
-    title: "Inicia una disputa de cargo",
+    title: "Guarda un profesional como favorito",
     description:
-      "Si te asignamos esta misión opcional, queremos que pruebes el flujo de disputa para verificar que funciona y se entiende correctamente.",
+      "En Manito puedes guardar profesionales de confianza para contratarlos de nuevo fácilmente. Logra que un profesional quede en tu lista.",
     objectives: [
-      { id: "cA-1", text: "Entra a un proyecto cerrado o completado" },
-      { id: "cA-2", text: "Busca la opción para disputar un cargo" },
       {
-        id: "cA-3",
-        text: "Inicia el proceso (no tienes que completarlo)",
-        tip: "Solo necesitamos saber si el flujo existe y se encuentra fácilmente",
+        id: "cA-1",
+        text: "Encuentra cómo guardar un profesional en favoritos",
       },
     ],
     optional: true,
@@ -178,15 +153,64 @@ export const clienteMissions: Mission[] = [
   {
     id: "cB",
     number: "B",
-    title: "Revisa el historial de trabajos",
+    title: "Deja las notificaciones a tu gusto",
     description:
-      "Busca dónde puedes ver todos los proyectos que has tenido, pasados y actuales.",
+      "La app te manda avisos sobre tus proyectos. Averigua qué notificaciones existen y deja activas solo las que te sirvan.",
     objectives: [
-      { id: "cB-1", text: "Encuentra la sección de historial de proyectos" },
       {
-        id: "cB-2",
-        text: "Revisa cómo está organizada la información",
-        tip: "¿Hay suficiente detalle sobre cada trabajo pasado?",
+        id: "cB-1",
+        text: "Revisa qué notificaciones existen",
+        tip: "¿quedó claro para qué sirve cada tipo de aviso?",
+      },
+      { id: "cB-2", text: "Ajusta cuáles quieres recibir" },
+    ],
+    optional: true,
+  },
+  {
+    id: "cC",
+    number: "C",
+    title: "Cambia tu contraseña",
+    description:
+      "Función básica que igual hay que probar. Logra cambiarla sin que nadie te diga dónde está.",
+    objectives: [
+      {
+        id: "cC-1",
+        text: "Encuentra cómo cambiar tu contraseña",
+        tip: "¿la encontraste a la primera o tuviste que buscar?",
+      },
+    ],
+    optional: true,
+  },
+  {
+    id: "cD",
+    number: "D",
+    title: "Revisa tu historial de trabajos",
+    description:
+      "Averigua dónde puedes ver todos tus proyectos, pasados y actuales.",
+    objectives: [
+      {
+        id: "cD-1",
+        text: "Encuentra la sección de historial",
+        tip: "¿hay suficiente detalle sobre cada trabajo pasado?",
+      },
+    ],
+    optional: true,
+  },
+  {
+    id: "cE",
+    number: "E",
+    title: "Reporta un problema con un trabajo",
+    description:
+      "Imagina que algo del trabajo no quedó bien. Encuentra cómo reportar el problema e inicia el proceso.",
+    objectives: [
+      {
+        id: "cE-1",
+        text: "Entra a un proyecto y busca cómo reportar un problema",
+      },
+      {
+        id: "cE-2",
+        text: "Inicia el proceso",
+        tip: "¿quedó claro qué va a pasar después de reportar?",
       },
     ],
     optional: true,
@@ -195,277 +219,213 @@ export const clienteMissions: Mission[] = [
 
 export const profesionalMissions: Mission[] = [
   {
-    id: "m1",
+    id: "p1",
     number: 1,
-    title: "Crea tu cuenta y configura tu perfil",
+    title: "Deja tu perfil listo para recibir clientes",
     description:
-      "Regístrate como profesional y completa tu perfil desde cero. Son cuatro pasos que nos dan la información base para que los clientes puedan encontrarte.",
+      "Regístrate como profesional y completa tu perfil hasta que un cliente que lo vea pueda entender quién eres, qué haces y cuánto cobras. Tú decides qué poner — queremos ver si el proceso se explica solo.",
     objectives: [
-      { id: "m1-1", text: "Descarga la app y regístrate como profesional" },
       {
-        id: "m1-2",
-        text: "Paso 1: completa tu información y descripción de negocio",
-        tip: "¿Quedó claro qué poner en la descripción?",
+        id: "p1-1",
+        text: "Crea tu cuenta y llega hasta tener el perfil completo",
+        tip: "¿hubo algún paso donde no sabías qué poner o para qué servía?",
       },
       {
-        id: "m1-3",
-        text: "Paso 2: selecciona los servicios que ofreces",
-        tip: "¿Las categorías disponibles cubren bien lo que tú haces?",
+        id: "p1-2",
+        text: "Revisa tu perfil terminado",
+        tip: "¿te representa bien como profesional?",
       },
-      {
-        id: "m1-4",
-        text: "Paso 3: define tus tarifas y radio de trabajo",
-      },
-      {
-        id: "m1-5",
-        text: "Paso 4: agrega los datos de tu negocio (dirección, RUT, cuenta bancaria)",
-        tip: "¿Había algo que no entendías para qué servía?",
-      },
-      { id: "m1-6", text: "Verifica que tu perfil quedó guardado y completo" },
     ],
   },
   {
-    id: "m2",
+    id: "p2",
     number: 2,
-    title: "Configura tu área de servicio y servicios",
+    title: "Define dónde y qué trabajas",
     description:
-      "Afina dónde y qué trabajas. Esto define qué solicitudes de clientes vas a ver en tu feed.",
+      "Esto determina qué solicitudes de clientes vas a ver. Tu misión termina cuando tu zona de trabajo y tus servicios reflejan tu pega real.",
     objectives: [
-      { id: "m2-1", text: "Define en qué comunas o radio geográfico trabajas" },
       {
-        id: "m2-2",
-        text: "Confirma o ajusta los servicios que ofreces",
-        tip: "¿Falta alguna categoría de trabajo que tú haces?",
+        id: "p2-1",
+        text: "Deja configurada tu zona (comunas o radio)",
+        tip: "¿pudiste reflejar dónde trabajas de verdad?",
       },
       {
-        id: "m2-3",
-        text: "Guarda los cambios y verifica que quedaron aplicados",
+        id: "p2-2",
+        text: "Deja seleccionados tus servicios",
+        tip: "¿falta alguna categoría de trabajo que tú haces?",
       },
     ],
   },
   {
-    id: "m3",
+    id: "p3",
     number: 3,
-    title: "Ajusta tus preferencias de horario",
+    title: "Deja tu agenda como la usarías de verdad",
     description:
-      "Configura en qué días y horas estás disponible para recibir trabajos. Manito necesita saber cuándo puedes operar.",
+      "Configura tu disponibilidad semanal y prueba el calendario agregando algo tuyo (una visita, un trámite, lo que sea).",
     objectives: [
-      { id: "m3-1", text: "Busca la sección de horarios o disponibilidad" },
       {
-        id: "m3-2",
-        text: "Marca los días y rangos de hora en que trabajas",
-        tip: "¿El sistema permite reflejar tu horario real de trabajo?",
+        id: "p3-1",
+        text: "Deja marcados los días y horarios en que trabajas",
+        tip: "¿el sistema permite reflejar tu horario real?",
       },
-      { id: "m3-3", text: "Guarda la configuración" },
+      {
+        id: "p3-2",
+        text: "Agrega una tarea o visita propia al calendario",
+        tip: "¿esto reemplazaría cómo organizas tu agenda hoy?",
+      },
     ],
   },
   {
-    id: "m4",
+    id: "p4",
     number: 4,
-    title: "Agrega entradas a tu pricebook",
+    title: "Arma tu pricebook",
     description:
-      "El pricebook es tu lista de tarifas estándar. Te ahorra tiempo al cotizar porque puedes agregar ítems directamente desde ahí en vez de escribir desde cero.",
+      "El pricebook es tu lista de tarifas estándar — te ahorra tiempo al cotizar. Tu misión termina cuando tienes al menos 3 servicios tuyos guardados con sus precios.",
     objectives: [
-      { id: "m4-1", text: "Busca la sección de pricebook o tarifas" },
       {
-        id: "m4-2",
-        text: "Agrega al menos 3 servicios con sus precios",
-        tip: "¿El formato se ajusta a cómo manejas tus precios hoy en día?",
+        id: "p4-1",
+        text: "Deja guardados al menos 3 servicios con precio",
+        tip: "¿el formato se ajusta a cómo manejas tus precios hoy?",
       },
-      { id: "m4-3", text: "Verifica que quedaron guardados correctamente" },
     ],
   },
   {
-    id: "m5",
+    id: "p5",
     number: 5,
-    title: "Explora los trabajos disponibles",
+    title: "Encuentra un trabajo que te interese",
     description:
-      "El feed es donde ves las solicitudes de clientes que encajan con tu perfil. Explora, filtra y toma decisiones como lo harías en la vida real.",
+      "Entra al feed de solicitudes y revísalo como lo harías de verdad: lee, filtra, descarta, y quédate con uno que cotizarías.",
     objectives: [
-      { id: "m5-1", text: "Entra al feed de trabajos disponibles" },
       {
-        id: "m5-2",
-        text: "Lee al menos 3 solicitudes de clientes con atención",
-        tip: "¿Tienes suficiente información en cada card para decidir si vale la pena entrar al detalle?",
+        id: "p5-1",
+        text: "Revisa varias solicitudes y elige una que te interese",
+        tip: "¿las cards te dan suficiente información para decidir si entrar al detalle?",
       },
       {
-        id: "m5-3",
-        text: "Usa los filtros: urgencia, distancia, cotizaciones existentes",
-        tip: "¿Los filtros te son útiles para tu forma de trabajar?",
-      },
-      {
-        id: "m5-4",
-        text: "Elige una solicitud y revisa el detalle completo",
-        tip: "¿La información que da el cliente es suficiente para decidir si cotizas?",
+        id: "p5-2",
+        text: "Revisa el detalle completo de esa solicitud",
+        tip: "¿la información del cliente alcanza para decidir si cotizas? ¿qué falta?",
       },
     ],
   },
   {
-    id: "m6",
+    id: "p6",
     number: 6,
-    title: "Arma una cotización",
+    title: "Cotiza un trabajo",
     description:
-      "El constructor de cotizaciones es una de las herramientas principales de Manito. Úsalo como si fuera una cotización real para un cliente.",
+      "Arma y envía una cotización como si fuera real: mano de obra, materiales, todo.",
     objectives: [
       {
-        id: "m6-1",
-        text: "Entra al constructor de cotizaciones desde una solicitud",
+        id: "p6-1",
+        text: "Logra que tu cotización quede enviada al cliente",
+        tip: "¿el formato se parece a cómo cotizas tú hoy? ¿le falta algo?",
       },
       {
-        id: "m6-2",
-        text: "Agrega ítems de mano de obra con sus precios",
+        id: "p6-2",
+        text: "Revisa el total antes de enviar",
+        tip: "¿los cálculos cuadraron en tiempo real?",
       },
-      {
-        id: "m6-3",
-        text: "Agrega materiales con cantidad, unidad y precio unitario",
-        tip: "¿El total se calcula bien en tiempo real?",
-      },
-      {
-        id: "m6-4",
-        text: "Revisa la cotización completa antes de enviar",
-        tip: "¿El formato se parece a cómo cotizas tú hoy? ¿Le falta algo?",
-      },
-      { id: "m6-5", text: "Envía la cotización al cliente" },
     ],
   },
   {
-    id: "m7",
+    id: "p7",
     number: 7,
-    title: "Trabaja un proyecto de principio a fin",
+    title: "Trabaja un proyecto de principio a fin 🤝",
     description:
-      "La misión más completa. Queremos ver el flujo completo: desde que aceptas un trabajo hasta que lo cierras, con informe y rendición de materiales incluidos.",
+      "La misión más completa. Un cliente aceptó tu cotización — ahora queremos ver el flujo entero: desde que empiezas hasta que cierras, con informe y rendición de materiales incluidos.",
     objectives: [
-      { id: "m7-1", text: "Toma un proyecto asignado y comienza el trabajo" },
+      { id: "p7-1", text: "Comienza el trabajo del proyecto asignado" },
       {
-        id: "m7-2",
-        text: "Sube un informe del avance del trabajo",
-        tip: "¿Fue fácil agregar el informe? ¿Puedes subir fotos?",
+        id: "p7-2",
+        text: "Deja registrado un informe del avance",
+        tip: "¿pudiste subir fotos sin problema?",
       },
       {
-        id: "m7-3",
+        id: "p7-3",
         text: "Agrega una rendición de materiales con un recibo ficticio",
-        tip: "¿El proceso de agregar materiales con recibo tiene sentido para ti?",
+        tip: "¿el proceso con recibo tiene sentido para cómo trabajas?",
       },
       {
-        id: "m7-4",
-        text: "Cierra el tramo de pago correspondiente",
-        tip: "¿Quedó claro que al cerrar el tramo el cliente recibe el aviso?",
+        id: "p7-4",
+        text: "Cierra el tramo correspondiente",
+        tip: "¿quedó claro que el cliente recibe un aviso al cerrarlo?",
       },
-      { id: "m7-5", text: "Completa y cierra el proyecto" },
+      { id: "p7-5", text: "Deja el proyecto completado y cerrado" },
     ],
   },
   {
-    id: "m8",
+    id: "p8",
     number: 8,
+    title: "Reagenda una visita 🤝",
+    description:
+      "La vida pasa y los horarios cambian. Logra que una visita ya coordinada quede propuesta para otra fecha u hora.",
+    objectives: [
+      {
+        id: "p8-1",
+        text: "Propón el cambio y confirma que quedó pendiente de aceptación del cliente",
+        tip: "¿fue fácil encontrar cómo hacerlo?",
+      },
+    ],
+  },
+  {
+    id: "p9",
+    number: 9,
+    title: "Coordina con tu cliente por la app 🤝",
+    description:
+      "Toda la comunicación queda registrada dentro del proyecto. Logra que un mensaje tuyo le llegue al cliente.",
+    objectives: [
+      {
+        id: "p9-1",
+        text: "Hazle llegar un mensaje al cliente de tu proyecto",
+        tip: "¿esto te sirve o preferirías WhatsApp? ¿por qué?",
+      },
+    ],
+  },
+  {
+    id: "pA",
+    number: "A",
     title: "Crea una orden de cambio",
     description:
-      "A veces un trabajo crece. Las órdenes de cambio sirven para documentar y cobrar esos ajustes con total transparencia hacia el cliente.",
+      "A veces un trabajo crece. Documenta un ajuste con su costo adicional y hazlo llegar al cliente.",
     objectives: [
       {
-        id: "m8-1",
-        text: "Dentro de un proyecto activo, busca la opción de orden de cambio",
-      },
-      {
-        id: "m8-2",
-        text: "Describe el cambio y agrega el costo adicional",
-      },
-      {
-        id: "m8-3",
-        text: "Envíasela al cliente",
-        tip: "¿El proceso fue claro? ¿Cambiarías algo de cómo funciona?",
+        id: "pA-1",
+        text: "Crea y envía una orden de cambio",
+        tip: "¿el proceso fue claro? ¿cambiarías algo?",
       },
     ],
+    optional: true,
   },
   {
-    id: "m9",
-    number: 9,
-    title: "Reagenda una visita",
-    description:
-      "La vida pasa y los horarios cambian. Prueba cómo funciona el proceso de reagendar un trabajo ya coordinado.",
-    objectives: [
-      {
-        id: "m9-1",
-        text: "Busca un trabajo o visita programada en tu calendario o proyectos",
-      },
-      { id: "m9-2", text: "Propone un cambio de fecha u hora" },
-      {
-        id: "m9-3",
-        text: "Confirma que queda pendiente de aceptación por el cliente",
-        tip: "¿Fue fácil encontrar la opción de reagendar?",
-      },
-    ],
-  },
-  {
-    id: "m10",
-    number: 10,
-    title: "Escríbele al cliente desde la app",
-    description:
-      "Manito tiene mensajería interna para que toda la comunicación quede registrada dentro del proyecto. Prueba cómo funciona.",
-    objectives: [
-      { id: "m10-1", text: "Entra a un proyecto activo" },
-      { id: "m10-2", text: "Manda un mensaje al cliente desde dentro de la app" },
-      {
-        id: "m10-3",
-        text: "Verifica que el mensaje se envió correctamente",
-        tip: "¿La mensajería dentro de la app te parece útil o preferirías usar WhatsApp?",
-      },
-    ],
-  },
-  {
-    id: "m11",
-    number: 11,
-    title: "Anota algo en tu calendario",
-    description:
-      "Manito tiene un calendario para organizar tus visitas y tareas. Prueba si funciona para tu forma de trabajar.",
-    objectives: [
-      { id: "m11-1", text: "Busca la sección de calendario" },
-      { id: "m11-2", text: "Agrega una visita o tarea con fecha y hora" },
-      {
-        id: "m11-3",
-        text: "Verifica que aparece en el calendario",
-        tip: "¿Esto reemplazaría cómo organizas tu agenda de trabajo hoy?",
-      },
-    ],
-  },
-  {
-    id: "m12",
-    number: 12,
+    id: "pB",
+    number: "B",
     title: "Crea tu empresa y agrega un trabajador",
     description:
-      "Si tienes un equipo o empresa, Manito te permite gestionarlo también. Prueba el flujo aunque sea con datos ficticios.",
+      "Si tienes equipo, Manito te permite gestionarlo. Prueba el flujo con datos ficticios.",
     objectives: [
-      { id: "m12-1", text: "Busca la sección de empresa o equipo en tu perfil" },
-      { id: "m12-2", text: "Crea tu empresa con los datos básicos" },
       {
-        id: "m12-3",
-        text: "Agrega a un trabajador ficticio",
-        tip: "¿El proceso para crear empresa y agregar trabajadores se entiende?",
+        id: "pB-1",
+        text: "Crea tu empresa y agrega un trabajador",
+        tip: "¿se entiende el proceso de crear empresa y sumar gente?",
       },
     ],
+    optional: true,
   },
   {
-    id: "m13",
-    number: 13,
+    id: "pC",
+    number: "C",
     title: "Revisa tu análisis de desempeño",
     description:
-      "La app tiene estadísticas sobre cómo te está yendo. Explora esa sección y cuéntanos si la información es útil.",
+      "Explora la sección de estadísticas. Si todavía no tienes trabajos cerrados va a estar vacía — igual cuéntanos qué te gustaría ver.",
     objectives: [
       {
-        id: "m13-1",
-        text: "Busca la sección de estadísticas o análisis de desempeño",
-      },
-      {
-        id: "m13-2",
-        text: "Revisa las métricas disponibles: trabajos, calificación, ingresos",
-        tip: "¿La información es útil para entender cómo te está yendo?",
-      },
-      {
-        id: "m13-3",
-        text: "¿Hay alguna métrica que te gustaría ver y no está?",
-        tip: "Cuéntanoslo en el feedback — esto nos sirve mucho",
+        id: "pC-1",
+        text: "Revisa la sección de estadísticas",
+        tip: "¿qué te gustaría ver ahí para saber cómo te está yendo?",
       },
     ],
+    optional: true,
     foundersNote:
-      "Como profesional founder, Martín va a coordinar una llamada de WhatsApp contigo para hacer un recorrido personalizado de todas estas funciones. Eso es adicional a este testing — te va a contactar en los próximos días.",
+      "Como profesional fundador, Martín va a coordinar una videollamada de WhatsApp contigo para acompañarte en el recorrido de todas las funciones. Eso es adicional a estas misiones. Te va a contactar en los próximos días.",
   },
 ];
