@@ -90,7 +90,7 @@ export default function Home() {
               Soy Cliente
             </h2>
             <p className="text-stone-500 text-sm leading-relaxed">
-              Voy a probar la app buscando y contratando maestros para mi casa
+              Voy a probar la app buscando y contratando profesionales para mi casa
             </p>
             <span
               className="inline-block mt-5 px-4 py-2 text-white rounded-xl text-sm font-medium"
@@ -104,16 +104,16 @@ export default function Home() {
         <button
           className="group block text-left w-full"
           onClick={() => {
-            setRole("maestro");
+            setRole("profesional");
             const profile = getProfile();
             if (profile) {
               fetch("/api/sync/profile", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ ...profile, role: "maestro" }),
+                body: JSON.stringify({ ...profile, role: "profesional" }),
               }).catch(() => {});
             }
-            router.push("/maestro");
+            router.push("/profesional");
           }}
         >
           <div
@@ -135,7 +135,7 @@ export default function Home() {
               className="font-semibold text-xl text-stone-900 mb-2"
               style={{ fontFamily: "var(--font-rubik), sans-serif" }}
             >
-              Soy Maestro
+              Soy Profesional
             </h2>
             <p className="text-stone-500 text-sm leading-relaxed">
               Voy a probar la app como profesional ofreciendo mis servicios

@@ -70,7 +70,7 @@ export const clienteMissions: Mission[] = [
     number: 3,
     title: "Revisa tu proyecto y las cotizaciones",
     description:
-      "Una vez enviada la solicitud, busca tu proyecto en la sección de proyectos y explora lo que llegó. Cada cotización muestra quién es el maestro, cuánto cobra y el tiempo estimado.",
+      "Una vez enviada la solicitud, busca tu proyecto en la sección de proyectos y explora lo que llegó. Cada cotización muestra quién es el profesional, cuánto cobra y el tiempo estimado.",
     objectives: [
       { id: "c3-1", text: "Ve a la sección de proyectos de la app" },
       { id: "c3-2", text: "Encuentra el proyecto que acabas de crear" },
@@ -91,9 +91,9 @@ export const clienteMissions: Mission[] = [
     number: 4,
     title: "Agrega a alguien como favorito",
     description:
-      "En Manito puedes guardar maestros de confianza para contratarlos fácilmente de nuevo. Busca cómo hacerlo.",
+      "En Manito puedes guardar profesionals de confianza para contratarlos fácilmente de nuevo. Busca cómo hacerlo.",
     objectives: [
-      { id: "c4-1", text: "Encuentra el perfil de un maestro dentro de la app" },
+      { id: "c4-1", text: "Encuentra el perfil de un profesional dentro de la app" },
       { id: "c4-2", text: "Agrégalo a tus favoritos" },
       {
         id: "c4-3",
@@ -193,15 +193,15 @@ export const clienteMissions: Mission[] = [
   },
 ];
 
-export const maestroMissions: Mission[] = [
+export const profesionalMissions: Mission[] = [
   {
     id: "m1",
     number: 1,
     title: "Crea tu cuenta y configura tu perfil",
     description:
-      "Regístrate como maestro y completa tu perfil desde cero. Son cuatro pasos que nos dan la información base para que los clientes puedan encontrarte.",
+      "Regístrate como profesional y completa tu perfil desde cero. Son cuatro pasos que nos dan la información base para que los clientes puedan encontrarte.",
     objectives: [
-      { id: "m1-1", text: "Descarga la app y regístrate como maestro" },
+      { id: "m1-1", text: "Descarga la app y regístrate como profesional" },
       {
         id: "m1-2",
         text: "Paso 1: completa tu información y descripción de negocio",
@@ -466,6 +466,6 @@ export const maestroMissions: Mission[] = [
       },
     ],
     foundersNote:
-      "Como maestro founder, Martín va a coordinar una llamada de WhatsApp contigo para hacer un recorrido personalizado de todas estas funciones. Eso es adicional a este testing — te va a contactar en los próximos días.",
+      "Como profesional founder, Martín va a coordinar una llamada de WhatsApp contigo para hacer un recorrido personalizado de todas estas funciones. Eso es adicional a este testing — te va a contactar en los próximos días.",
   },
 ];

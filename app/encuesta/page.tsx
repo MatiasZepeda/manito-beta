@@ -77,7 +77,7 @@ const WOULD_USE_OPTIONS = [
 export default function EncuestaPage() {
   const router = useRouter();
   const [ready, setReady] = useState(false);
-  const [role, setRole] = useState<"cliente" | "maestro">("cliente");
+  const [role, setRole] = useState<"cliente" | "profesional">("cliente");
   const [done, setDone] = useState(false);
 
   const [overallEase, setOverallEase] = useState(0);
@@ -265,7 +265,7 @@ export default function EncuestaPage() {
               style={{ fontFamily: "var(--font-rubik), sans-serif" }}
             >
               {role === "cliente"
-                ? "3. ¿La usarías para buscar un maestro de verdad?"
+                ? "3. ¿La usarías para buscar un profesional de verdad?"
                 : "3. ¿La usarías en tu trabajo real para conseguir clientes?"}
             </p>
             <div className="space-y-2">
@@ -297,8 +297,8 @@ export default function EncuestaPage() {
             >
               4. ¿La recomendarías a alguien que{" "}
               {role === "cliente"
-                ? "necesita un maestro"
-                : "trabaja como maestro"}
+                ? "necesita un profesional"
+                : "trabaja como profesional"}
               ?
             </p>
             <p className="text-stone-400 text-xs mb-4">

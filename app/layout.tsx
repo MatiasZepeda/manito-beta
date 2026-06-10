@@ -63,10 +63,10 @@ export default function RootLayout({
                 Cliente
               </Link>
               <Link
-                href="/maestro"
+                href="/profesional"
                 className="px-3 py-1.5 text-sm font-medium rounded-lg text-stone-600 transition-colors hover:bg-teal-50"
               >
-                Maestro
+                Profesional
               </Link>
               <Link
                 href="/feedback"

@@ -163,14 +163,14 @@ export default function ClientePage() {
           </summary>
           <div className="px-5 pb-5 border-t border-stone-50 pt-4 text-stone-600 text-sm leading-relaxed space-y-3">
             <p>
-              Encontrar un buen maestro en Chile es difícil. Le preguntas al
+              Encontrar un buen profesional en Chile es difícil. Le preguntas al
               vecino, buscas en el grupo del edificio, alguien te da el número
               del primo del portero, y todavía no sabes si el gallo va a
               aparecer o te va a cobrar lo que se le ocurra.
             </p>
             <p>
               Manito existe para que eso deje de ser así. Describes el trabajo
-              que necesitas, los maestros te mandan sus cotizaciones, y tú
+              que necesitas, los profesionales te mandan sus cotizaciones, y tú
               eliges con quién trabajar. Todo dentro de la app, con precio
               acordado antes de que lleguen a tu casa.
             </p>

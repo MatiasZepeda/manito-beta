@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 interface FeedbackEntry {
   id: string;
   tester: string;
-  role: "cliente" | "maestro";
+  role: "cliente" | "profesional";
   category: "impresion" | "bugs" | "navegacion" | "otro";
   notes: string;
   date: string;
@@ -137,8 +137,8 @@ export default function FeedbackPage() {
                 color: "#f26a4b",
               },
               {
-                label: "Maestros",
-                value: entries.filter((e) => e.role === "maestro").length,
+                label: "Profesionales",
+                value: entries.filter((e) => e.role === "profesional").length,
                 color: "#1a7f8e",
               },
               {
@@ -175,7 +175,7 @@ export default function FeedbackPage() {
           >
             <option value="todos">Todos los roles</option>
             <option value="cliente">Clientes</option>
-            <option value="maestro">Maestros</option>
+            <option value="profesional">Profesionales</option>
           </select>
           <select
             value={filterCat}
@@ -240,7 +240,7 @@ export default function FeedbackPage() {
                       className="w-full px-3 py-2 border border-stone-200 rounded-lg text-sm outline-none focus:border-stone-400"
                     >
                       <option value="cliente">Cliente</option>
-                      <option value="maestro">Maestro</option>
+                      <option value="profesional">Profesional</option>
                     </select>
                   </div>
                   <div>

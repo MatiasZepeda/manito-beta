@@ -170,7 +170,7 @@ export default function AdminPage() {
           {[
             { label: "Total testers", value: testers.length },
             { label: "Clientes", value: testers.filter((t) => t.role === "cliente").length },
-            { label: "Maestros", value: testers.filter((t) => t.role === "maestro").length },
+            { label: "Profesionales", value: testers.filter((t) => t.role === "profesional").length },
             { label: "Encuestas completadas", value: surveysCompleted },
           ].map((s) => (
             <div

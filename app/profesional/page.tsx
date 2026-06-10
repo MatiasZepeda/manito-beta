@@ -2,16 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { maestroMissions } from "@/lib/content";
+import { profesionalMissions } from "@/lib/content";
 import { MissionCard } from "@/components/MissionCard";
 import type { MissionFeedback } from "@/components/MissionCard";
 import { isSurveyDone, getProfile, getRole } from "@/lib/session";
 
-const STORAGE_KEY = "manito-beta-maestro-v2";
+const STORAGE_KEY = "manito-beta-profesional-v2";
 const TEAL = "#1a7f8e";
 const TEAL_LIGHT = "#d6f0f3";
 
-export default function MaestroPage() {
+export default function ProfesionalPage() {
   const [feedback, setFeedback] = useState<Record<string, MissionFeedback>>({});
   const [ready, setReady] = useState(false);
   const [surveyDone, setSurveyDone] = useState(false);
@@ -36,7 +36,7 @@ export default function MaestroPage() {
         body: JSON.stringify({
           session_id: profile.session_id,
           mission_id: id,
-          role: getRole() ?? "maestro",
+          role: getRole() ?? "profesional",
           ease: data.ease,
           comment: data.comment,
           action: "complete",
@@ -64,8 +64,8 @@ export default function MaestroPage() {
     }
   };
 
-  const completedMissions = maestroMissions.filter((m) => feedback[m.id]).length;
-  const allRequiredDone = completedMissions === maestroMissions.length;
+  const completedMissions = profesionalMissions.filter((m) => feedback[m.id]).length;
+  const allRequiredDone = completedMissions === profesionalMissions.length;
 
   if (!ready) return null;
 
@@ -82,7 +82,7 @@ export default function MaestroPage() {
               fontFamily: "var(--font-rubik), sans-serif",
             }}
           >
-            Guía Beta: Maestro
+            Guía Beta: Profesional
           </span>
           <h1
             className="text-3xl font-bold text-stone-900 mb-3"
@@ -131,14 +131,14 @@ export default function MaestroPage() {
                   fontFamily: "var(--font-rubik), sans-serif",
                 }}
               >
-                {completedMissions}/{maestroMissions.length}
+                {completedMissions}/{profesionalMissions.length}
               </span>
             </div>
             <div className="h-2 bg-stone-100 rounded-full overflow-hidden">
               <div
                 className="h-full rounded-full transition-all duration-500"
                 style={{
-                  width: `${(completedMissions / maestroMissions.length) * 100}%`,
+                  width: `${(completedMissions / profesionalMissions.length) * 100}%`,
                   backgroundColor: TEAL,
                 }}
               />
@@ -163,7 +163,7 @@ export default function MaestroPage() {
             <p>
               La pega entra de boca en boca no más. Y cuando el teléfono no
               suena, no hay mucho que hacer. Manito existe para que eso cambie:
-              clientes que necesitan maestros como tú publican sus trabajos
+              clientes que necesitan profesionales como tú publican sus trabajos
               dentro de la app, tú ves las solicitudes, decides cuáles te
               interesan, mandas tu cotización, y si te eligen, el trabajo queda
               coordinado ahí mismo.
@@ -173,7 +173,7 @@ export default function MaestroPage() {
               precio acordado antes de que pongas un pie en la casa del cliente.
             </p>
             <p>
-              Estamos en beta. La app funciona, pero queremos que maestros
+              Estamos en beta. La app funciona, pero queremos que profesionales
               reales la prueben antes de abrirla al público. Tu experiencia como
               profesional vale más que cualquier otra cosa en este momento.
             </p>
@@ -192,10 +192,10 @@ export default function MaestroPage() {
               fontFamily: "var(--font-rubik), sans-serif",
             }}
           >
-            Eres un maestro fundador 🌟
+            Eres un profesional fundador 🌟
           </h3>
           <p className="text-stone-700 text-sm leading-relaxed">
-            Estás entre los primeros maestros en probar Manito. Martín va a
+            Estás entre los primeros profesionales en probar Manito. Martín va a
             coordinar una videollamada de WhatsApp contigo para acompañarte en
             el recorrido de todas las funciones. Eso es adicional a estas
             misiones. Te va a contactar en los próximos días.
@@ -207,10 +207,10 @@ export default function MaestroPage() {
           className="font-semibold text-stone-800 mb-3 text-lg"
           style={{ fontFamily: "var(--font-rubik), sans-serif" }}
         >
-          Tus {maestroMissions.length} misiones
+          Tus {profesionalMissions.length} misiones
         </h2>
         <div className="space-y-3 mb-10">
-          {maestroMissions.map((mission) => (
+          {profesionalMissions.map((mission) => (
             <MissionCard
               key={mission.id}
               mission={mission}
