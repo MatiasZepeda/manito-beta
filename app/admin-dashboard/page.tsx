@@ -160,7 +160,7 @@ export default function AdminDashboardPage() {
 
         {/* Tabs */}
         <div className="flex gap-2 mb-6">
-          {([["misiones", `Misiones (${missions.length})`], ["encuestas", `Encuestas (${surveys.length})`]] as const).map(([key, label]) => (
+          {([["misiones", `Misiones (${new Set(missions.map((m) => m.session_id)).size} testers)`], ["encuestas", `Encuestas (${surveys.length})`]] as const).map(([key, label]) => (
             <button
               key={key}
               onClick={() => setTab(key)}
