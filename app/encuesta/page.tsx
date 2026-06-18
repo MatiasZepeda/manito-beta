@@ -264,8 +264,8 @@ export default function EncuestaPage() {
               onChange={setOverallEase}
               min={1}
               max={10}
-              leftLabel="Muy fácil"
-              rightLabel="Muy difícil"
+              leftLabel="Muy difícil"
+              rightLabel="Muy fácil"
               accent={accent}
             />
           </div>
