@@ -64,6 +64,7 @@ export default function AdminDashboardPage() {
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [filterRole, setFilterRole] = useState<"todos" | "cliente" | "profesional">("todos");
   const [tab, setTab] = useState<Tab>("encuestas");
+  const [expandedTesters, setExpandedTesters] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     fetchAll();
@@ -240,46 +241,64 @@ export default function AdminDashboardPage() {
                   const accentLight = role === "cliente" ? "#fde8e1" : "#d6f0f3";
                   const sorted = [...feedbacks].sort((a, b) => a.mission_id.localeCompare(b.mission_id));
                   return (
-                    <div key={sessionId} className="bg-white rounded-2xl border border-stone-100 p-5">
-                      <div className="flex items-center gap-3 mb-4">
-                        <span className="text-xs font-mono text-stone-400">
-                          {sessionId.substring(0, 8)}
-                        </span>
+                    <div key={sessionId} className="bg-white rounded-2xl border border-stone-100">
+                      <button
+                        onClick={() => {
+                          const next = new Set(expandedTesters);
+                          if (next.has(sessionId)) next.delete(sessionId);
+                          else next.add(sessionId);
+                          setExpandedTesters(next);
+                        }}
+                        className="w-full text-left p-5 flex items-center justify-between"
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="text-xs font-mono text-stone-400">
+                            {sessionId.substring(0, 8)}
+                          </span>
+                          <span
+                            className="px-2 py-0.5 rounded-full text-xs font-medium capitalize"
+                            style={{ backgroundColor: accentLight, color: accent }}
+                          >
+                            {role}
+                          </span>
+                          <span className="text-xs text-stone-400">
+                            {feedbacks.length} misiones · prom {(feedbacks.reduce((s, f) => s + f.ease, 0) / feedbacks.length).toFixed(1)}/5
+                          </span>
+                        </div>
                         <span
-                          className="px-2 py-0.5 rounded-full text-xs font-medium capitalize"
-                          style={{ backgroundColor: accentLight, color: accent }}
+                          className="text-stone-400 text-lg transition-transform duration-200"
+                          style={{ transform: expandedTesters.has(sessionId) ? "rotate(180deg)" : "rotate(0deg)" }}
                         >
-                          {role}
+                          ▾
                         </span>
-                        <span className="text-xs text-stone-400">
-                          {feedbacks.length} misiones
-                        </span>
-                      </div>
-                      <div className="space-y-3">
-                        {sorted.map((fb) => (
-                          <div key={fb.id} className="border border-stone-100 rounded-xl p-3">
-                            <div className="flex items-center justify-between mb-1">
-                              <div className="flex items-center gap-2">
-                                <span
-                                  className="text-xs font-bold px-1.5 py-0.5 rounded"
-                                  style={{ backgroundColor: accentLight, color: accent }}
-                                >
-                                  {fb.mission_id.toUpperCase()}
-                                </span>
-                                <span className="text-sm font-medium text-stone-700">
-                                  {MISSION_NAMES[fb.mission_id] || fb.mission_id}
-                                </span>
+                      </button>
+                      {expandedTesters.has(sessionId) && (
+                        <div className="px-5 pb-5 space-y-3">
+                          {sorted.map((fb) => (
+                            <div key={fb.id} className="border border-stone-100 rounded-xl p-3">
+                              <div className="flex items-center justify-between mb-1">
+                                <div className="flex items-center gap-2">
+                                  <span
+                                    className="text-xs font-bold px-1.5 py-0.5 rounded"
+                                    style={{ backgroundColor: accentLight, color: accent }}
+                                  >
+                                    {fb.mission_id.toUpperCase()}
+                                  </span>
+                                  <span className="text-sm font-medium text-stone-700">
+                                    {MISSION_NAMES[fb.mission_id] || fb.mission_id}
+                                  </span>
+                                </div>
+                                <span className="text-sm font-bold text-stone-900">{fb.ease}/5</span>
                               </div>
-                              <span className="text-sm font-bold text-stone-900">{fb.ease}/5</span>
+                              {fb.comment && fb.comment.trim() && (
+                                <p className="text-sm text-stone-600 mt-1 pl-1">
+                                  💬 {fb.comment}
+                                </p>
+                              )}
                             </div>
-                            {fb.comment && fb.comment.trim() && (
-                              <p className="text-sm text-stone-600 mt-1 pl-1">
-                                💬 {fb.comment}
-                              </p>
-                            )}
-                          </div>
-                        ))}
-                      </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   );
                 })}
