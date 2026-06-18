@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getRole, markSurveyDone, isSurveyDone, getProfile } from "@/lib/session";
+import { getRole, markSurveyDone, isSurveyDone, getOrCreateSessionId } from "@/lib/session";
 
 const CORAL = "#f26a4b";
 const CORAL_LIGHT = "#fde8e1";
@@ -96,7 +96,24 @@ export default function EncuestaPage() {
       return;
     }
     setRole(r);
-    if (isSurveyDone()) setDone(true);
+    if (isSurveyDone()) {
+      setDone(true);
+      const saved = localStorage.getItem("manito_survey_data");
+      const synced = localStorage.getItem("manito_survey_synced");
+      if (saved && !synced) {
+        const data = JSON.parse(saved);
+        const sessionId = getOrCreateSessionId();
+        fetch("/api/sync/survey", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ session_id: sessionId, ...data }),
+        })
+          .then((res) => {
+            if (res.ok) localStorage.setItem("manito_survey_synced", "1");
+          })
+          .catch(() => {});
+      }
+    }
     setReady(true);
   }, [router]);
 
@@ -131,17 +148,19 @@ export default function EncuestaPage() {
     };
     localStorage.setItem("manito_survey_data", JSON.stringify(data));
     markSurveyDone();
-    const profile = getProfile();
-    if (profile) {
-      fetch("/api/sync/survey", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          session_id: profile.session_id,
-          ...data,
-        }),
-      }).catch(() => {});
-    }
+    const sessionId = getOrCreateSessionId();
+    fetch("/api/sync/survey", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        session_id: sessionId,
+        ...data,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) localStorage.setItem("manito_survey_synced", "1");
+      })
+      .catch(() => {});
     setDone(true);
   };
 
@@ -179,6 +198,25 @@ export default function EncuestaPage() {
             <span>💬</span> Escribir por WhatsApp
           </a>
         </div>
+        <button
+          onClick={() => {
+            localStorage.removeItem("manito_survey_done");
+            localStorage.removeItem("manito_survey_data");
+            localStorage.removeItem("manito_survey_synced");
+            setDone(false);
+            setOverallEase(0);
+            setRoleSpecific(0);
+            setWouldUse("");
+            setNps(-1);
+            setLikedMost("");
+            setLikedLeast("");
+            setWouldChange("");
+            setErrors([]);
+          }}
+          className="mt-6 text-sm text-stone-400 underline underline-offset-2 hover:text-stone-600 transition-colors"
+        >
+          Volver a responder
+        </button>
       </div>
     );
   }

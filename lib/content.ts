@@ -58,7 +58,7 @@ export const clienteMissions: Mission[] = [
   {
     id: "c3",
     number: 3,
-    title: "Entérate de cómo va tu soli",
+    title: "Entérate de cómo va tu solicitud",
     description:
       "Ya enviaste tu solicitud. Ahora averigua en qué está: encuentra tu proyecto y revisa las cotizaciones que llegaron. Tu reto es entender qué te está ofreciendo cada profesional.",
     objectives: [

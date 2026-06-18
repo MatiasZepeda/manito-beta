@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { getProfile, setRole } from "@/lib/session";
+import { setRole } from "@/lib/session";
 
 export default function Home() {
   const router = useRouter();
@@ -61,14 +61,6 @@ export default function Home() {
           className="group block text-left w-full"
           onClick={() => {
             setRole("cliente");
-            const profile = getProfile();
-            if (profile) {
-              fetch("/api/sync/profile", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ ...profile, role: "cliente" }),
-              }).catch(() => {});
-            }
             router.push("/cliente");
           }}
         >
@@ -109,14 +101,6 @@ export default function Home() {
           className="group block text-left w-full"
           onClick={() => {
             setRole("profesional");
-            const profile = getProfile();
-            if (profile) {
-              fetch("/api/sync/profile", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ ...profile, role: "profesional" }),
-              }).catch(() => {});
-            }
             router.push("/profesional");
           }}
         >
