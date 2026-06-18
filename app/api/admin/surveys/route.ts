@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
     const { data, error } = await sb
       .from("final_surveys")
       .select("*")
-      .order("created_at", { ascending: false });
+      .order("completed_at", { ascending: false });
 
     if (error) {
       return NextResponse.json({ error: `Supabase: ${error.message}` }, { status: 500 });

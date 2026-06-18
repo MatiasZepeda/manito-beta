@@ -14,7 +14,7 @@ interface SurveyResponse {
   liked_most: string;
   liked_least: string;
   would_change: string;
-  created_at?: string;
+  completed_at?: string;
 }
 
 export default function AdminDashboardPage() {
@@ -180,9 +180,9 @@ export default function AdminDashboardPage() {
                         {survey.role}
                       </span>
                     </div>
-                    {survey.created_at && (
+                    {survey.completed_at && (
                       <span className="text-xs text-stone-400">
-                        {new Date(survey.created_at).toLocaleDateString("es-CL")}
+                        {new Date(survey.completed_at).toLocaleDateString("es-CL")}
                       </span>
                     )}
                   </div>
