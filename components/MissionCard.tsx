@@ -17,7 +17,7 @@ interface MissionCardProps {
   onUncomplete: (id: string) => void;
 }
 
-const EASE_LABELS = ["", "Muy fácil", "Fácil", "Normal", "Difícil", "Muy difícil"];
+const EASE_LABELS = ["", "Muy difícil", "Difícil", "Normal", "Fácil", "Muy fácil"];
 
 export function MissionCard({
   mission,
@@ -156,8 +156,8 @@ export function MissionCard({
                   ))}
                 </div>
                 <div className="flex justify-between text-xs text-stone-400 px-0.5">
-                  <span>Muy fácil</span>
                   <span>Muy difícil</span>
+                  <span>Muy fácil</span>
                 </div>
                 {ease > 0 && (
                   <p
