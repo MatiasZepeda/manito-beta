@@ -37,13 +37,17 @@ export default function AdminDashboardPage() {
           router.push("/admin-login");
           return;
         }
-        const body = await res.json().catch(() => ({}));
-        throw new Error(body.error || `Error ${res.status}`);
+        let msg = `Error ${res.status}`;
+        try {
+          const body = await res.json();
+          if (body.error) msg = body.error;
+        } catch {}
+        throw new Error(msg);
       }
       const { data } = await res.json();
       setSurveys(data || []);
     } catch (error) {
-      setFetchError(error instanceof Error ? error.message : "Error cargando datos");
+      setFetchError(error instanceof Error ? `${error.name}: ${error.message}` : "Error cargando datos");
     } finally {
       setLoading(false);
     }

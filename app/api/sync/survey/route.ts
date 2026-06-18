@@ -3,6 +3,12 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 
 export async function POST(request: NextRequest) {
   try {
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      return NextResponse.json(
+        { error: "Supabase env vars missing on server" },
+        { status: 500 }
+      );
+    }
     const body = await request.json();
     const {
       session_id, role, overall_ease, role_specific,
@@ -22,9 +28,12 @@ export async function POST(request: NextRequest) {
       },
       { onConflict: "session_id" }
     );
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error) return NextResponse.json({ error: `Supabase: ${error.message}` }, { status: 500 });
     return NextResponse.json({ ok: true });
-  } catch {
-    return NextResponse.json({ error: "internal error" }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json(
+      { error: `Server crash: ${err instanceof Error ? err.message : String(err)}` },
+      { status: 500 }
+    );
   }
 }
