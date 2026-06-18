@@ -21,6 +21,7 @@ export default function AdminDashboardPage() {
   const router = useRouter();
   const [surveys, setSurveys] = useState<SurveyResponse[]>([]);
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState<string | null>(null);
   const [filterRole, setFilterRole] = useState<"todos" | "cliente" | "profesional">("todos");
 
   useEffect(() => {
@@ -29,25 +30,27 @@ export default function AdminDashboardPage() {
 
   const fetchSurveys = async () => {
     try {
+      setFetchError(null);
       const res = await fetch("/api/admin/surveys");
       if (!res.ok) {
         if (res.status === 401) {
           router.push("/admin-login");
           return;
         }
-        throw new Error("Error fetching surveys");
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error || `Error ${res.status}`);
       }
       const { data } = await res.json();
       setSurveys(data || []);
     } catch (error) {
-      console.error("Error:", error);
+      setFetchError(error instanceof Error ? error.message : "Error cargando datos");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleLogout = () => {
-    document.cookie = "admin_session=; max-age=0; path=/";
+  const handleLogout = async () => {
+    await fetch("/api/admin/logout", { method: "POST" }).catch(() => {});
     router.push("/admin-login");
   };
 
@@ -133,6 +136,17 @@ export default function AdminDashboardPage() {
           <div className="text-center py-12">
             <p className="text-stone-500">Cargando...</p>
           </div>
+        ) : fetchError ? (
+          <div className="text-center py-12">
+            <p className="text-red-600 font-medium mb-2">Error al cargar</p>
+            <p className="text-stone-500 text-sm mb-4">{fetchError}</p>
+            <button
+              onClick={() => { setLoading(true); fetchSurveys(); }}
+              className="px-4 py-2 text-sm font-medium text-white bg-stone-800 rounded-lg hover:bg-stone-900 transition-colors"
+            >
+              Reintentar
+            </button>
+          </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-stone-400">Sin respuestas aún</p>
@@ -173,7 +187,7 @@ export default function AdminDashboardPage() {
                     <div>
                       <div className="text-xs text-stone-500">Facilidad</div>
                       <div className="text-xl font-bold text-stone-900">
-                        {survey.overall_ease}/5
+                        {survey.overall_ease}/10
                       </div>
                     </div>
                     <div>

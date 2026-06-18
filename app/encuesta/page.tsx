@@ -88,6 +88,7 @@ export default function EncuestaPage() {
   const [likedLeast, setLikedLeast] = useState("");
   const [wouldChange, setWouldChange] = useState("");
   const [errors, setErrors] = useState<string[]>([]);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     const r = getRole();
@@ -129,13 +130,15 @@ export default function EncuestaPage() {
     return e;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const errs = validate();
     if (errs.length > 0) {
       setErrors(errs);
       return;
     }
+    setSubmitting(true);
+    setErrors([]);
     const data: SurveyData = {
       role,
       overall_ease: overallEase,
@@ -147,21 +150,27 @@ export default function EncuestaPage() {
       would_change: wouldChange,
     };
     localStorage.setItem("manito_survey_data", JSON.stringify(data));
-    markSurveyDone();
     const sessionId = getOrCreateSessionId();
-    fetch("/api/sync/survey", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        session_id: sessionId,
-        ...data,
-      }),
-    })
-      .then((res) => {
-        if (res.ok) localStorage.setItem("manito_survey_synced", "1");
-      })
-      .catch(() => {});
-    setDone(true);
+    try {
+      const res = await fetch("/api/sync/survey", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ session_id: sessionId, ...data }),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error || `Error ${res.status}`);
+      }
+      localStorage.setItem("manito_survey_synced", "1");
+      markSurveyDone();
+      setDone(true);
+    } catch (err) {
+      setErrors([
+        `No se pudo enviar: ${err instanceof Error ? err.message : "error de red"}. Intenta de nuevo.`,
+      ]);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (!ready) return null;
@@ -423,13 +432,14 @@ export default function EncuestaPage() {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full py-4 rounded-xl text-white font-semibold text-base transition-opacity hover:opacity-90"
+            disabled={submitting}
+            className="w-full py-4 rounded-xl text-white font-semibold text-base transition-opacity hover:opacity-90 disabled:opacity-60"
             style={{
               backgroundColor: accent,
               fontFamily: "var(--font-rubik), sans-serif",
             }}
           >
-            Enviar feedback →
+            {submitting ? "Enviando..." : "Enviar feedback →"}
           </button>
 
           {/* WhatsApp opcional */}
